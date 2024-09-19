@@ -1,0 +1,107 @@
+.lot .css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input {
+  padding: 8px 14px !important;
+  background: white;
+}
+
+/* .lot .MuiTypography-root .MuiTypography-body1 .css-3eaalp-MuiTypography-root {
+  background: red !important;
+} */
+.lot .css-3eaalp-MuiTypography-root {
+  margin-bottom: 10px;
+}
+.lot .css-1tf0ytm {
+  align-self: end !important;
+}
+.lot .css-buzeao {
+  margin-bottom: 24px !important;
+}
+.lot
+  .lotProduct
+  .css-1dpsf03-MuiFormControl-root-MuiTextField-root
+  .MuiOutlinedInput-root {
+  background: white;
+}
+.lot .lotProduct .css-shbgrw-MuiGrid-root {
+  margin-top: 0px;
+}
+.css-rp9cti-MuiGrid-root {
+  margin-top: 0px !important;
+}
+.css-1e26b5f-MuiGrid-root {
+  margin-top: 0px !important;
+}
+/* .css-1tf0ytm {
+ 
+  align-self: end !important;
+} */
+/* .css-rp9cti-MuiGrid-root  */
+/* .css-nu231y-MuiInputBase-root-MuiOutlinedInput-root {
+  padding: 0px !important;
+  height: 42px !important;
+  background: white;
+} */
+.css-ict9cr-MuiGrid-root {
+  align-items: flex-end !important;
+}
+/* .css-ka7ti6-MuiAutocomplete-root
+  .MuiAutocomplete-inputRoot
+  .MuiAutocomplete-input {
+  font-size: 14px !important;
+  padding: 0 10px !important;
+} */
+/* The CSS rule `.css-nxo287-MuiInputBase-input-MuiOutlinedInput-input` seems to be incomplete as it
+ends with `font`. It should be followed by a CSS property and value to specify the font styling for
+the selected element. Without a valid CSS property and value, this rule will not have any effect on
+the styling of the element it targets. */
+/* .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input {
+  font
+} */
+.css-ict9cr-MuiGrid-root > .MuiGrid-item {
+  padding-top: '0px';
+  border: '1px solid transparent';
+}
+/* .autoField .css-i4bv87-MuiSvgIcon-root {
+  background: white !important;
+} */
+/* .css-1glvl0p-MuiButtonBase-root-MuiIconButton-root-MuiAutocomplete-clearIndicator {
+  background: white !important;
+} */
+/* .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input.Mui-disabled {
+  opacity: 0.9 !important;
+} */
+
+.charges .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input {
+  width: 150px !important;
+}
+input[type='number'] {
+  -moz-appearance: textfield !important;
+}
+::-webkit-outer-spin-button {
+  WebkitAppearance: 'none';
+  margin: 0,
+}
+
+.css-17vbkzs-MuiFormControl-root-MuiTextField-root{
+  margin-top:0px !important
+}
+/* .lot.css-ielwcm-MuiInputBase-root-MuiOutlinedInput-root,.css-8s2wph-MuiInputBase-root-MuiOutlinedInput-root,.css-1tmtnpr-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root{
+  border-radius:15px!important;
+} */
+/* .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input,.css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input{
+  padding: 12px 14px !important;
+
+} */
+.css-1q2btzk-MuiFormLabel-root{
+  font-size:12px!important;
+  font-weight:500 !important
+}
+
+.css-1q2btzk-MuiFormLabel-root{
+  margin-bottom:3px
+}
+/* .css-8s2wph-MuiInputBase-root-MuiOutlinedInput-root{
+ padding:19px 14px!important
+} */
+/* .css-ielwcm-MuiInputBase-root-MuiOutlinedInput-root.Mui-disabled{
+  background:#eff3f4 !important;
+} */

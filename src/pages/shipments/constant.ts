@@ -1,0 +1,3 @@
+export const PACKING_LIST_DOWNLOAD="packing_list_download";
+export const PRODUCT_ITEMS_LIST_DOWNLOAD="product-items_list_download";
+export const SHIPMENT_BOOKINGS_DOWNLOAD="shipment_bookings_download"

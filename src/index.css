@@ -1,0 +1,54 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+* {
+  padding: 0px;
+  margin: 0px;
+}
+body {
+  font-family: 'Poppins', sans-serif !important;
+  width: 100%;
+  /* overflow-x: hidden !important; */
+}
+.w-full {
+  width: auto;
+}
+.w-1-6 {
+  width: 80%;
+}
+::-webkit-scrollbar {
+  width: 5px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  border: 1px solid transparent;
+  
+  background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 20px;
+  background-color: #d9d9d9;
+}
+::-webkit-scrollbar:vertical {
+  width: 8px;
+}
+::-webkit-scrollbar-button:vertical:decrement {
+  background-color: transparent;
+  background-repeat: no-repeat;
+  background-size: 70%;
+  background-position: top;
+}
+::-webkit-scrollbar-button:vertical:increment {
+  background-color: transparent;
+  background-repeat: no-repeat;
+  background-size: 70%;
+  background-position: bottom;
+}
+
+::-webkit-scrollbar-button:vertical:decrement {
+  background-image: url('../src/assets/images/decrement.png');
+}
+
+::-webkit-scrollbar-button:vertical:increment {
+  background-image: url('../src/assets/images/increment.png');
+}

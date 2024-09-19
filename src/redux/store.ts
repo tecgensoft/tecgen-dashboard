@@ -24,7 +24,6 @@ import expenseReducer from './feature/officeExpense/officeExpenseSlice'
 import paymentReducer from "./feature/payment/paymentSlice"
 import printReducer from './feature/print/printSlice'
 import selectReducer from "./feature/product/ProductSlice"
-import rolePermissionsReducer from "./feature/role/roleSlice"
 import searchReducer, { IText } from './feature/search/searchSlice'
 import shipmentReducer from './feature/shipment/shipmentSlice'
 import stepperReducer from "./feature/stepper/stepperSlice"
@@ -55,7 +54,6 @@ const store: EnhancedStore<
     tracking: any
     expense: any
     shipment: any
-    rolePermissions: any
     branch: branch
     user: any
   },
@@ -78,7 +76,6 @@ const store: EnhancedStore<
             tracking: any
             expense: any
             shipment: any
-            rolePermissions: role
             branch: branch
             user:any
           },
@@ -104,7 +101,6 @@ const store: EnhancedStore<
     tracking: trackingReducer,
     expense: expenseReducer,
     shipment: shipmentReducer,
-    rolePermissions: rolePermissionsReducer,
     branch: branchReducer,
     user: userReducer
   },

@@ -6,9 +6,8 @@ import { CSSObject, Theme, styled, useTheme } from '@mui/material/styles'
 import { useState } from 'react'
 import { Outlet } from 'react-router-dom'
 import drawer_close_mb from '../assets/drawerClose_mb.png'
-import logo_dark from '../assets/logo_dark.png'
-import logo_white from '../assets/logo_white.png'
-import miniLogo from '../assets/miniLogo.png'
+import miniLogo from "../assets/lodingIcon.png"
+import logo from '../assets/logo.png'
 import Header from './_components/Header'
 import Sidebar from './_components/Sidebar'
 const drawerWidth = 273
@@ -80,7 +79,7 @@ function Layout() {
             sx={{
               display: 'flex',
               justifyContent: 'center',
-              padding: '60px 0px',
+              padding: '32px 0px',
 
               bgcolor: theme =>
                 theme.palette.mode === 'dark' ? '#202020' : 'white',
@@ -91,8 +90,8 @@ function Layout() {
                 !open
                   ? miniLogo
                   : theme.palette.mode === 'dark'
-                    ? logo_white
-                    : logo_dark
+                    ? logo
+                    : logo
               }
               // src={
               //   open
@@ -104,6 +103,7 @@ function Layout() {
               alt="Logo"
               style={{
                 transition: 'width 0.3s ease-in-out',
+                maxHeight:"80px"
               }}
             />
 
@@ -151,12 +151,12 @@ function Layout() {
                 alignItems: 'center',
               }}
             >
-              <Box sx={{ bgcolor: 'primary' }}>
+              {/* <Box sx={{ bgcolor: 'primary' }}>
                 <img
                   src={theme.palette.mode === 'dark' ? logo_white : logo_dark}
                   alt="Logo"
                 />
-              </Box>
+              </Box> */}
               <Box sx={{ bgcolor: 'primary' }}>
                 <img
                   src={drawer_close_mb}

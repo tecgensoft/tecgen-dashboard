@@ -27,7 +27,7 @@ export default function Profile() {
         justifyContent:"center",
         border:"3px solid #fff",
         borderRadius:"50%",
-        background:"#224e7212",
+        background:"#32976A12",
         cursor:"pointer"
       }}>
       <PersonIcon color='primary' sx={{fontSize:"28px"}} />

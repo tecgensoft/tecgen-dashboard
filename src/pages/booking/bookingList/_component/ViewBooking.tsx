@@ -4,22 +4,22 @@
 import ExpandLessIcon from '@mui/icons-material/ExpandLess'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import {
-  Box,
-  Button,
-  Collapse,
-  Divider,
-  Grid,
-  IconButton,
-  Modal,
-  Paper,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Typography,
-  useTheme,
+    Box,
+    Button,
+    Collapse,
+    Divider,
+    Grid,
+    IconButton,
+    Modal,
+    Paper,
+    Table,
+    TableBody,
+    TableCell,
+    TableContainer,
+    TableHead,
+    TableRow,
+    Typography,
+    useTheme,
 } from '@mui/material'
 import { useState } from 'react'
 import closeIcon from '../../../../assets/closeIcon.png'
@@ -257,7 +257,7 @@ export default function ViewBooking({
                   borderRadius={'8px'}
                   sx={{
                     cursor: 'pointer',
-                    bgcolor: '#224E72',
+                    bgcolor: '#32976A',
                     color: '#fff',
                     height: '56px',
                     padding: '0px',

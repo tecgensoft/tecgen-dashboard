@@ -8,10 +8,10 @@ export const lightTheme = createTheme({
     },
 
     primary: {
-      main: '#224E72',
+      main: '#32976A',
     },
     secondary: {
-      main: '#EA244E',
+      main: '#32976A',
     },
     success: {
       main: '#02BF6C',
@@ -38,10 +38,10 @@ export const darkTheme = createTheme({
       white: '#FFFFFF',
     },
     primary: {
-      main: '#EA244E',
+      main: '#32976A',
     },
     secondary: {
-      main: '#224E72',
+      main: '#32976A',
     },
     slateGrey: {
       main: "#202020"

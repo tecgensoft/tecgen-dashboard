@@ -10,7 +10,7 @@
 
 
 ```javascript
-my-react-app/
+tecgen-dashboard-app/
 ├── node_modules/
 ├── public/
 │   ├── index.html
@@ -40,21 +40,28 @@ my-react-app/
 
 ## Technologies Used
 
-- React 
+- React
+- Redux
+- RTK Query  
 - TypeScript
-- Prime React (UI component framework )
-- Tailwind CSS (CSS framework )
-- Axios (Api Request)
+- MaterialUI (UI component framework )
 - JWT (Authentication)
 - Jest (React Testing Library)
 
 
 ## Installation
 
-Install my-project with npm
+Install tecgen-dashboard with npm or yarn
 
 ```bash
-  npm install my-project
-  cd my-project
+  git clone https://github.com/tecgensoft/tecgen-dashboard.git
+  cd tecgen-dashboard
+  npm install or yarn install
+
 ```
     # tecgen-dashboard
+
+```
+  API swagger:- https://www.tecgensoft.com/swagger
+
+```

@@ -97,8 +97,8 @@ const APPSidebar = ({ isOpenSidebar }: { isOpenSidebar: boolean }) => {
                   filter: theme =>
                     isSelected(menuItem) && isOpenSidebar
                       ? theme.palette.mode !== 'dark'
-                        ? 'brightness(0) saturate(100%) invert(26%) sepia(55%) saturate(589%) hue-rotate(165deg) brightness(92%) contrast(94%)'
-                        : 'brightness(0) saturate(100%) invert(20%) sepia(79%) saturate(5145%) hue-rotate(338deg) brightness(99%) contrast(86%)'
+                        ? ''
+                        : ''
                       : 'inherit',
                 },
                 '& .MuiListItemText-primary': {

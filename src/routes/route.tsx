@@ -4,17 +4,14 @@ import App from '../App'
 import { ErrorBoundary } from 'react-error-boundary'
 import ErrorReturn from '../errors/ErrorReturn'
 import NoInternetConnection from '../errors/NoInternetConnection'
-import UpdateLotStatus from '../pages/booking/UpdateLotStatus'
 import Dashboard from '../pages/dashboard'
 import Login from '../pages/login'
 import NotFound from '../pages/notFound'
 
 
 import BookingList from '../pages/booking/bookingList'
-import PromoCode from '../pages/booking/createBooking/_component/PromoCode'
 
 import Authenticate from './AuthenticateRoute'
-import AuthorizedRoute from './AuthorizedRoute'
 import PrivateRoute from './PrivateRoute'
 const routes = createBrowserRouter([
   {
@@ -41,34 +38,31 @@ const routes = createBrowserRouter([
         ),
       },
       {
-        path: '/products',
+        path: '/products/manage-products',
         children: [
           {
             index: true,
             element: (
-              // <PrivateRoute>
-              //   <BookingList />
-              // </PrivateRoute>
                 <BookingList />
             ),
           },
+          
+        ],
+      },
+      {
+        path: '/category',
+        children: [
           {
-            path: 'promo_code',
+            path: 'manage-category',
             element: (
-              <PrivateRoute>
-                <PromoCode />
-              </PrivateRoute>
+                <BookingList />
             ),
           },
+
           {
-            path: 'update_lot_status',
+            path: 'manage-subcategory',
             element: (
-              // <PrivateRoute>
-              //   <UpdateLotStatus />
-              // </PrivateRoute>
-              <AuthorizedRoute path="/booking/update_lot_status">
-                <UpdateLotStatus />
-              </AuthorizedRoute>
+                <BookingList />
             ),
           },
         ],

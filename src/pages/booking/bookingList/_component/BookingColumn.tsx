@@ -195,36 +195,41 @@ export default function BookingColumn(
   }
 
   const columns: GridColDef[] = [
+    // {
+    //   field: 'created_at',
+    //   headerName: 'Date',
+    //   sortable: false,
+    //   disableColumnMenu: true,
+    //   minWidth: 150,
+    //   valueGetter: value => formatDate(value) + ' ' + formatTime(value),
+    // },
     {
-      field: 'created_at',
-      headerName: 'Date',
+      field: 'icon',
+      headerName: 'Icon',
       sortable: false,
       disableColumnMenu: true,
       minWidth: 150,
-      valueGetter: value => formatDate(value) + ' ' + formatTime(value),
     },
     {
-      field: 'reference',
-      headerName: 'Booking Reference',
+      field: 'name',
+      headerName: 'Name',
       sortable: false,
       disableColumnMenu: true,
       minWidth: 250,
     },
     {
-      field: 'receiverName',
-      headerName: 'Receiver Name',
-      minWidth: 150,
+      field: 'show_in_ecommerce',
+      headerName: 'Show in Ecommerce',
+      minWidth: 250,
       sortable: false,
       disableColumnMenu: true,
-      valueGetter: (_value, row) => row?.receiver?.name || '',
     },
     {
-      field: 'receiver',
-      headerName: 'Receiver Phone',
+      field: 'is_active',
+      headerName: 'is Active',
+      minWidth: 250,
       sortable: false,
       disableColumnMenu: true,
-      minWidth: 150,
-      valueGetter: (_value, row) => row?.receiver?.phone || '',
     },
     {
       field: 'destination',
@@ -235,80 +240,37 @@ export default function BookingColumn(
       valueGetter: (_value, row) =>
         row?.receiver?.state?.name + ',' + row?.receiver?.country?.name,
     },
-    {
-      field: 'total_carton',
-      headerName: 'NOC',
-      sortable: false,
-      disableColumnMenu: true,
-      minWidth: 60,
-    },
-    {
-      field: 'gross_weight',
-      headerName: 'Gross Weight',
-      sortable: false,
-      disableColumnMenu: true,
-      minWidth: 120,
-    },
-    {
-      field: 'location_status',
-      headerName: 'Location Status',
-      sortable: false,
-      disableColumnMenu: true,
-      minWidth: 150,
-    },
-    {
-      field: 'total_local_amount',
-      headerName: 'Total Local Amount',
-      sortable: false,
-      disableColumnMenu: true,
-      minWidth: 150,
-      valueGetter: (value: any) => 'RM ' + (value as number),
-    },
-    {
-      field: 'paid_amount',
-      headerName: 'Paid Amount',
-      sortable: false,
-      disableColumnMenu: true,
-      minWidth: 120,
-    },
-    {
-      field: 'payment_status',
-      headerName: 'Payment Status',
-      sortable: false,
-      disableColumnMenu: true,
-      minWidth: 150,
-      renderCell: (params: GridRenderCellParams) => (
-        <span
-          style={{
-            color: params?.value === 'PAID' ? 'green' : 'red',
-            background:
-              params?.value === 'PAID'
-                ? 'rgba(36, 187, 124, 0.1)'
-                : 'rgba(234, 36, 78, 0.1)',
-            borderRadius: '4px',
-            padding: '1px 6px',
-          }}
-        >
-          {params?.value}
-        </span>
-      ),
-    },
+    // {
+    //   field: 'payment_status',
+    //   headerName: 'Payment Status',
+    //   sortable: false,
+    //   disableColumnMenu: true,
+    //   minWidth: 150,
+    //   renderCell: (params: GridRenderCellParams) => (
+    //     <span
+    //       style={{
+    //         color: params?.value === 'PAID' ? 'green' : 'red',
+    //         background:
+    //           params?.value === 'PAID'
+    //             ? 'rgba(36, 187, 124, 0.1)'
+    //             : 'rgba(234, 36, 78, 0.1)',
+    //         borderRadius: '4px',
+    //         padding: '1px 6px',
+    //       }}
+    //     >
+    //       {params?.value}
+    //     </span>
+    //   ),
+    // },
     {
       field: 'created_by',
       headerName: 'Created By',
       sortable: false,
       disableColumnMenu: true,
-      valueGetter: (value: any) => value?.email,
+      // valueGetter: (value: any) => value?.email,
       minWidth: 150,
     },
-    {
-      field: 'updated_at',
-      headerName: 'Last Modified',
-      minWidth: 150,
-      valueGetter: value => formatDate(value) + ' ' + formatTime(value),
-      sortable: false,
-      disableColumnMenu: true,
-    },
+    
     {
       field: 'actions',
       headerName: 'Actions',
@@ -351,23 +313,11 @@ export default function BookingColumn(
               )
             )}
 
-            {userInfo?.role !== 'Staff' &&
-              userInfo.role !== 'Staff  for test role' && (
+            {(
                 <Tooltip
-                  title={`${row?.has_due_task ? 'Lot is creating....' : 'Edit Booking'}`}
+                  title={``}
                 >
                   <IconButton
-                    //  item?.payment_status === "PAID" ||
-                    //  item?.local_currency_code !== user.currency_code ||
-                    //  item?.paid_amount > 0 ||
-                    //  item?.has_due_task
-                    disabled={
-                      row?.payment_status === 'PAID' ||
-                      row?.local_currency_code !== userInfo.currency_code ||
-                      row?.paid_amount > 0 
-                      ||
-                      row?.has_due_task
-                    }
                     aria-label="edit"
                     sx={{
                       background:
@@ -380,13 +330,6 @@ export default function BookingColumn(
                         theme.palette.mode === 'dark'
                           ? 'white'
                           : 'rgba(14, 20, 31, 1)',
-                    }}
-                    onClick={() => {
-                      localStorage.setItem('bookingAction', BOOKING_EDIT_ACTION)
-
-                      navigate('/booking/create_new_booking', {
-                        state: { id: params?.row?.id },
-                      })
                     }}
                   >
                     <EditIcon />
@@ -410,56 +353,7 @@ export default function BookingColumn(
               </IconButton>
             </Tooltip>
 
-            <Menu
-              anchorEl={anchorEl}
-              open={Boolean(anchorEl)}
-              onClose={handleClose}
-              sx={{
-                '& .MuiPaper-root': {
-                  boxShadow: 'none',
-                },
-              }}
-            >
-              {userInfo?.role != 'Staff' &&
-                userInfo?.role != 'Staff  for test role' && (
-                  <MenuItem
-                    onClick={() => {
-                      dispatch(setFrom('undefined/'))
-
-                      navigate(`/booking/payment`, {
-                        state: { id: selectedRow?.id, from: false },
-                      })
-                    }}
-                    sx={{
-                      cursor:
-                        selectedRow?.payment_status === 'PAID'
-                          ? 'not-allowed'
-                          : 'pointer',
-                    }}
-                    disabled={selectedRow?.payment_status === 'PAID'}
-                  >
-                    <img src={paymentImg} alt="payment" />
-                    <span style={{ fontSize: '12px', margin: ' 4px' }}>
-                      {' '}
-                      Payment
-                    </span>
-                  </MenuItem>
-                )}
-              <MenuItem onClick={handleInvoicePdf}>
-                <img src={invoceImg} alt="invoice" />
-                <span style={{ fontSize: '12px', margin: '4px' }}>
-                  {' '}
-                  Invoice
-                </span>
-              </MenuItem>
-              <MenuItem
-                disabled={isPrinting}
-                onClick={() => handlePrintClick()}
-              >
-                <img src={printImg} alt="print" />
-                <span style={{ fontSize: '12px', margin: '4px' }}> Print</span>
-              </MenuItem>
-            </Menu>
+            
           </>
         )
       },

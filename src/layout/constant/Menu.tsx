@@ -37,8 +37,8 @@ const Menu = () => {
       ),
       title: 'Category',
       items: [        
-        { title: 'Mange Category', items: [], to: '/category/manage-products' },
-        { title: 'Mange Subcategory', items: [], to: '/products/add-product' },
+        { title: 'Mange Category', items: [], to: '/category/manage-category' },
+        { title: 'Mange Subcategory', items: [], to: '/category/manage-subcategory' },
       ],
     },
     {

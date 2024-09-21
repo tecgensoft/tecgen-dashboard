@@ -58,13 +58,13 @@ function Layout() {
   const theme = useTheme()
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
   const isMediumScreen = useMediaQuery(theme.breakpoints.down('md'))
-  const handleDrawerToggle = () => {
-    if (isSmallScreen) {
-      setMobileOpen(!mobileOpen)
-    } else {
-      setOpen(!open)
-    }
-  }
+  // const handleDrawerToggle = () => {
+  //   if (isSmallScreen) {
+  //     setMobileOpen(!mobileOpen)
+  //   } else {
+  //     setOpen(!open)
+  //   }
+  // }
 
   const LogoImage = styled('img')({
     transition: 'all 0.3s ease-in-out',
@@ -131,7 +131,7 @@ function Layout() {
           sx={{ position: 'relative' }}
           variant="temporary"
           open={mobileOpen}
-          onClose={handleDrawerToggle}
+          // onClose={handleDrawerToggle}
           ModalProps={{
             keepMounted: true, // Better open performance on mobile.
           }}
@@ -183,7 +183,7 @@ function Layout() {
         <Header
           open={open}
           drawerWidth={drawerWidth}
-          handleDrawerToggle={handleDrawerToggle}
+          // handleDrawerToggle={handleDrawerToggle}
         />
 
         <Box

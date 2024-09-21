@@ -2,7 +2,6 @@
 
 import {
   Box,
-  Button,
   Grid,
   Paper,
   Table,
@@ -13,7 +12,7 @@ import {
   TableRow,
   Typography,
   useMediaQuery,
-  useTheme,
+  useTheme
 } from '@mui/material'
 import {
   Bar,
@@ -33,9 +32,7 @@ import {
 import note from '../../assets/note.png'
 import user from '../../assets/user.png'
 import vehicle from '../../assets/vehicles.png'
-import { logout } from '../../redux/feature/auth/authSlice'
-import { useGetDashboardDataQuery } from '../../redux/feature/dashboard/dashboardApi'
-import { useAppDispatch } from '../../redux/hook'
+
 import './style.css'
 
 const testData = [
@@ -84,11 +81,12 @@ const columns = [
   { id: 'email', label: 'Email' },
 ]
 export default function Dashboard() {
-  const dispatch = useAppDispatch()
+  // const dispatch = useAppDispatch()
   const theme = useTheme()
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
-  const { data } = useGetDashboardDataQuery(undefined)
-  console.log('data', data?.data)
+  // const { data } = useGetDashboardDataQuery(undefined)
+
+  
   return (
     <Box>
       <Grid container spacing={1}>
@@ -488,7 +486,7 @@ export default function Dashboard() {
                   fill="#32976A"
                   label
                 >
-                  {pieData.map((entry, index) => (
+                  {pieData.map((_entry, index) => (
                     <Cell key={`cell-${index}`} fill="#32976A" />
                   ))}
                 </Pie>

@@ -5,33 +5,32 @@ import {
   useTheme
 } from '@mui/material'
 import { useEffect } from 'react'
-import { useLocation } from 'react-router-dom'
 import { setThemeMood } from '../../redux/feature/theme/themeSlice'
 import { useAppDispatch } from '../../redux/hook'
 import Profile from './Profile'
 export default function Header({
   open,
   drawerWidth,
-  handleDrawerToggle,
+  // handleDrawerToggle,
 }: {
   open: boolean
   drawerWidth: number
-  handleDrawerToggle: () => void
+  // handleDrawerToggle: () => void
 }) {
   const theme = useTheme()
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
   const dispatch = useAppDispatch()
-  const location = useLocation()
+  // const location = useLocation()
 
   useEffect(() => {
     const savedTheme = localStorage.getItem('theme') || 'light'
     dispatch(setThemeMood(savedTheme === 'dark'))
   }, [dispatch])
 
-  const handleThemeToggle = (isDarkMode: boolean) => {
-    localStorage.setItem('theme', isDarkMode ? 'dark' : 'light')
-    dispatch(setThemeMood(isDarkMode))
-  }
+  // const handleThemeToggle = (isDarkMode: boolean) => {
+  //   localStorage.setItem('theme', isDarkMode ? 'dark' : 'light')
+  //   dispatch(setThemeMood(isDarkMode))
+  // }
 
   return (
     <AppBar

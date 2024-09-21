@@ -10,7 +10,7 @@ const ConfirmDeleteModal = ({ open, onClose, onConfirm, title }: any) => {
       aria-describedby="modal-modal-description"
       BackdropProps={{
         style: {
-          backgroundColor: 'rgba(0, 0, 0, 0.1)', // Set backdrop transparency here
+          backgroundColor: 'rgba(0, 0, 0, 0.1)', 
         },
       }}
     >

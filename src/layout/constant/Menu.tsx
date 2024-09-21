@@ -27,7 +27,33 @@ const Menu = () => {
       items: [],
       to: '/',
     },
-    
+    {
+      icon: (
+        <img
+          src={productIcon}
+          alt="category"
+          style={{ width: '24px', height: '24px' }}
+        />
+      ),
+      title: 'Category',
+      items: [        
+        { title: 'Mange Category', items: [], to: '/category/manage-products' },
+        { title: 'Mange Subcategory', items: [], to: '/products/add-product' },
+      ],
+    },
+    {
+      icon: (
+        <img
+          src={productIcon}
+          alt="brand"
+          style={{ width: '24px', height: '24px' }}
+        />
+      ),
+      title: 'Brand',
+      items: [        
+        { title: 'Mange Brand', items: [], to: '/brand/manage-brands' },
+      ],
+    },
     {
       icon: (
         <img

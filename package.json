@@ -17,7 +17,7 @@
     "@mui/material": "^5.15.20",
     "@mui/styles": "^5.15.21",
     "@mui/x-data-grid": "^7.8.0",
-    "@reduxjs/toolkit": "^2.2.5",
+    "@reduxjs/toolkit": "^2.2.7",
     "@types/react-redux": "^7.1.33",
     "crypto-js": "^4.2.0",
     "formik": "^2.4.6",

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 // @ts-nocheck 
-import { SUCCESS } from "../../../../redux/feature/notification/constant"
+import { SUCCESS } from "../../../../constant/constant"
 import { setNotification } from "../../../../redux/feature/notification/notificationSlice"
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 // @ts-nocheck 

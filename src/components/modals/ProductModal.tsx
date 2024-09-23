@@ -2,23 +2,23 @@
 
 // @ts-nocheck
 import {
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  FormControl,
-  FormLabel,
-  MenuItem,
-  OutlinedInput,
-  Select,
+    Button,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogTitle,
+    FormControl,
+    FormLabel,
+    MenuItem,
+    OutlinedInput,
+    Select,
 } from '@mui/material'
 import { useEffect, useState } from 'react'
+import { SUCCESS, WARNING } from '../../constant/constant'
 import {
-  EDIT_ACTION,
-  productType,
+    EDIT_ACTION,
+    productType,
 } from '../../pages/ProductManagement/Product/constant'
-import { SUCCESS, WARNING } from '../../redux/feature/notification/constant'
 // import {
 //   setMessage,
 //   setOpen,

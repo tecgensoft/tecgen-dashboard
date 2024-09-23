@@ -1,19 +1,19 @@
-
-import { Box, Typography } from '@mui/material';
-import TextField from '@mui/material/TextField';
-import { styled } from '@mui/material/styles';
-import React from 'react';
+import { Box, Typography } from '@mui/material'
+import TextField from '@mui/material/TextField'
+import { styled } from '@mui/material/styles'
+import React from 'react'
 interface StyledInputProps {
-  errorText?: string;
-  name: string;
-  label: string;
-  placeholder?: string;
-  value?: string;
-  disable?: boolean;
-  error?:boolean;
-  helperText?: string;
-  onChange?: () => void;
-  required?: boolean;
+  type?: string
+  errorText?: string
+  name: string
+  label?: string
+  placeholder?: string
+  value?: string
+  disable?: boolean
+  error?: boolean
+  helperText?: string
+  onChange?: () => void
+  required?: boolean
   inputLabel?: string
 }
 const InputFieldComponent = styled(TextField)(({ theme }) => {
@@ -45,13 +45,25 @@ const InputFieldComponent = styled(TextField)(({ theme }) => {
     },
   }
 })
-const InputField: React.FC<StyledInputProps> = props => {
-  const {  name, label, inputLabel,  value,  error, helperText, disable, onChange, required } = props
-
+const InputField: React.FC<StyledInputProps> = ({
+  type='text',
+  name,
+  label,
+  inputLabel,
+  value,
+  error,
+  helperText,
+  disable,
+  onChange,
+  required,
+  placeholder
+} ) => {
   return (
     <Box>
-      {label && <Typography>{label}</Typography>}
+
+      {label && <Typography sx={{color:"#0D0D0D", mb:"8px", fontSize:"14px"}}>{label}</Typography>}
       <InputFieldComponent
+        type={type}
         helperText={helperText}
         label={inputLabel && inputLabel}
         variant="outlined"
@@ -60,7 +72,7 @@ const InputField: React.FC<StyledInputProps> = props => {
         value={value}
         error={error}
         name={name}
-        placeholder={props.placeholder && props.placeholder}
+        placeholder={placeholder && placeholder}
         disabled={disable}
         onChange={onChange}
         required={required}

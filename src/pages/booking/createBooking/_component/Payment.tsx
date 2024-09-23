@@ -2,18 +2,18 @@
 // @ts-nocheck
 
 import {
-  Box,
-  Button,
-  FormControl,
-  FormLabel,
-  Grid,
-  MenuItem,
-  Select,
-  styled,
-  TextField,
-  Typography,
-  useMediaQuery,
-  useTheme,
+    Box,
+    Button,
+    FormControl,
+    FormLabel,
+    Grid,
+    MenuItem,
+    Select,
+    styled,
+    TextField,
+    Typography,
+    useMediaQuery,
+    useTheme,
 } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
@@ -25,15 +25,15 @@ import Loader from '../../../../components/Loader'
 //   setOpen,
 // } from '../../../../redux/feature/notification/notificationSlice'
 import {
-  DANGER,
-  SUCCESS,
-} from '../../../../redux/feature/notification/constant'
+    DANGER,
+    SUCCESS,
+} from '../../../../constant/constant'
 import { setNotification } from '../../../../redux/feature/notification/notificationSlice'
 import {
-  useCreatePaymentMutation,
-  useGetAllBookingsForPaymentQuery,
-  useGetSinglePaymentInfoQuery,
-  useLazyGetConversionRateQuery,
+    useCreatePaymentMutation,
+    useGetAllBookingsForPaymentQuery,
+    useGetSinglePaymentInfoQuery,
+    useLazyGetConversionRateQuery,
 } from '../../../../redux/feature/payment/paymentApi'
 import { setStep } from '../../../../redux/feature/stepper/stepperSlice'
 import { useAppDispatch, useAppSelector } from '../../../../redux/hook'

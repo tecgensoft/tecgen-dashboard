@@ -1,25 +1,23 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
 
-// @ts-nocheck 
 import ExpandLessIcon from '@mui/icons-material/ExpandLess'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import {
-    Box,
-    Button,
-    Collapse,
-    Divider,
-    Grid,
-    IconButton,
-    Modal,
-    Paper,
-    Table,
-    TableBody,
-    TableCell,
-    TableContainer,
-    TableHead,
-    TableRow,
-    Typography,
-    useTheme,
+  Box,
+  Button,
+  Collapse,
+  Divider,
+  Grid,
+  IconButton,
+  Modal,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Typography,
+  useTheme,
 } from '@mui/material'
 import { useState } from 'react'
 import closeIcon from '../../../../assets/closeIcon.png'
@@ -27,13 +25,7 @@ import closeIcon from '../../../../assets/closeIcon.png'
 // import lotIcon from "../../../../assets/lotIcon.png"
 import Span from './Span'
 
-interface Product {
-  name: string
-  weight: number
-  quantity: number
-  customCharge: number
-  subTotal: number
-}
+
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -246,7 +238,7 @@ export default function ViewBooking({
         </Grid>
         <Box pl={4} pr={4}>
           {lot_list?.map((lot: any, index: number) => {
-            const isExpandedCom = isExpanded === index;
+            const isExpandedCom = false
             return (
               <Box mb={1}>
                 <Box

@@ -13,6 +13,7 @@ import BookingList from '../pages/booking/bookingList'
 
 import Authenticate from './AuthenticateRoute'
 import PrivateRoute from './PrivateRoute'
+import Category from '../pages/Category'
 const routes = createBrowserRouter([
   {
     path: '/',
@@ -55,7 +56,7 @@ const routes = createBrowserRouter([
           {
             path: 'manage-category',
             element: (
-                <BookingList />
+                <Category />
             ),
           },
 

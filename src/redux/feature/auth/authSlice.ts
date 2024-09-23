@@ -1,71 +1,72 @@
-import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { getUserData } from '../../../utils/getUser';
-import { clearTokens, setTokens } from '../../../utils/localStorage/local.auth';
-import { userLogin } from './authAction';
-
-
+import { createSlice } from "@reduxjs/toolkit";
+import { authApi } from "./authApi";
+// interface IErrorPayload {
+//     error?: {
+//         code?: string;
+//         message?: string;
+//     };
+// }
 
 export interface IInitialState {
-  loading: boolean
-  userInfo: any
-  userToken: string | null;
-  error: string | null
-  success: boolean
+    loading: boolean;
+    error: undefined | null | string;
+    message: null | string;
+    success: boolean;
 }
 
-const initialState: IInitialState = {
-  loading: false,
-  userInfo: null,
-  userToken:null,
-  error: null,
-  success: false,
-}
+export const initialState: IInitialState = {
+    loading: false,
+    error: null,
+    message: null,
+    success: false,
+};
 const authSlice = createSlice({
-  name: 'auth',
-  initialState,
-  reducers: {
-    logout: (state) => {
-      state.loading = false;
-      state.userInfo = null;
-      state.userToken = null;
-      state.error = null;
-      state.success = false;
-      clearTokens();
+    name: "auth",
+    initialState,
+    reducers: {       
+        setError: (state, action) => {
+            state.error = action.payload;
+        },
     },
-    setToken: (state, action: PayloadAction<string>) => {
-      state.userToken = action.payload;
+    extraReducers: (builder) => {
+        builder.addMatcher(authApi.endpoints.login.matchPending, (state) => {
+            state.loading = true;
+            state.error = null;
+            state.success = false;
+        });
+        builder.addMatcher(
+            authApi.endpoints.login.matchFulfilled,
+            (state) => {
+                state.loading = false;
+                state.error = null;
+                state.success = true;
+            }
+        );
+        builder.addMatcher(
+            authApi.endpoints.login.matchRejected,
+            (state) => {
+                // const error = (action.payload?.data as IErrorPayload)?.error;
+
+                let errorMessage: string | undefined;
+
+                // if (typeof error === "object" && error !== null) {
+                //     // Check if error has a 'code' and 'message'
+                //     if (error.code === "invalidCredentials") {
+                //         errorMessage = "Invalid E-mail/Password.";
+                //     } else {
+                //         errorMessage = error.message;
+                //     }
+                // } else {
+                //     // Handle case where error is not an object
+                //     errorMessage = "An unknown error occurred";
+                // }
+                state.loading = false;
+                state.error = errorMessage;
+                state.success = false;
+            }
+        );
     },
-    setUserInfo: (state, action: PayloadAction<any>) => {
-      state.userInfo = action.payload;
-    }, 
-  },
-  extraReducers: builder => {
-    builder.addCase(userLogin.pending, state => {
-      state.loading = true
-      state.userInfo = null
-      state.error= null
-      state.success= false
-    })
-    builder.addCase(userLogin.fulfilled, (state, { payload }) => {
-      // set token in local storage
-      setTokens(payload.access, payload.refresh)
-      const user = getUserData(payload.access)
-      state.loading = false
-      state.success = true
-      state.error= null
-      state.userToken = payload.access
-      state.userInfo = user;
-    })
-    builder.addCase(userLogin.rejected, (state, {payload}) => {
-      state.loading = false
-      state.success = false
-      state.error = payload as string | null
-    })
-  },
-})
+});
 
-export const { logout, setToken, setUserInfo } = authSlice.actions
-export default authSlice.reducer
-
-
-
+export const { setError } = authSlice.actions;
+export default authSlice.reducer;

@@ -1,59 +1,45 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-// @ts-nocheck
+
 
 import { useTheme } from '@mui/material'
 import { DataGrid } from '@mui/x-data-grid'
-import { useEffect, useState } from 'react'
-import {
-  useGetAllBookingsQuery,
-  useGetInvoicePdfQuery,
-} from '../../../../redux/feature/booking/bookingApi'
+import { useState } from 'react'
+
 
 import DataFetchingLoad from '../../../../components/DataFetchingLoad'
 import CustomNoRowsOverlay from '../../../../components/NoData'
-import TableLoader from '../../../../components/TableLoader'
+import TableLoader from '../../../../components/table/TableLoader'
 import '../style.css'
-import BookingColumn from './BookingColumn'
 
-export default function DataTable({ search }: { search: string }) {
+export default function DataTable() {
   const theme = useTheme()
   const [paginationModel, setPaginationModel] = useState({
     pageSize: 10,
     page: 0,
   })
 
-  // Destructure the data and the total count from the API response
-  const { data, refetch, isLoading } = useGetAllBookingsQuery({
-    search,
-    page: paginationModel.page + 1,
-  })
 
-  useEffect(() => {
-    refetch()
-  }, [paginationModel, refetch, search])
-  const [downloadInvoice, setDownLoadInvoice] = useState(false)
-  const [id, setId] = useState('')
-  const { isSuccess } = useGetInvoicePdfQuery(id, {
-    skip: !downloadInvoice,
-  })
+
+  
+  // const [downloadInvoice, setDownLoadInvoice] = useState(false)
+  // const [id, setId] = useState('')
 
   // console.log(isSuccess)
 
-  const columns = BookingColumn(theme, setDownLoadInvoice, setId)
-  const rows = data?.data?.length ? data.data : []
+  // const columns = BookingColumn(theme, setDownLoadInvoice, setId)
+  const rows:any[] = []
   return (
     <>
-      {isLoading ? (
+      {'isLoading' ? (
         <TableLoader />
       ) : (
         <div className="table" >
           <DataGrid
             rows={rows}
-            columns={columns}
+            columns={[]}
             paginationModel={paginationModel}
             onPaginationModelChange={setPaginationModel}
-            rowCount={data?.page?.total || 0} // Ensure the total count is passed correctly
-            paginationMode="server" // Enable server-side pagination
+            rowCount={0} 
+            paginationMode="server" 
             getRowClassName={params =>
               theme.palette.mode !== 'dark' &&
               params.indexRelativeToCurrentPage % 2 === 1
@@ -77,7 +63,7 @@ export default function DataTable({ search }: { search: string }) {
             }}
             // pageSizeOptions={[10, 25, 50]}
           />
-          <DataFetchingLoad isLoading={isLoading} />
+          <DataFetchingLoad isLoading={true} />
         </div>
       )}
     </>

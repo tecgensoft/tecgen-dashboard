@@ -2,20 +2,20 @@
 // @ts-nocheck
 import ModeEditIcon from '@mui/icons-material/ModeEdit'
 import {
-  Box,
-  Button,
-  IconButton,
-  Pagination,
-  Paper,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Tooltip,
-  Typography,
-  useTheme,
+    Box,
+    Button,
+    IconButton,
+    Pagination,
+    Paper,
+    Table,
+    TableBody,
+    TableCell,
+    TableContainer,
+    TableHead,
+    TableRow,
+    Tooltip,
+    Typography,
+    useTheme,
 } from '@mui/material'
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
@@ -24,13 +24,13 @@ import SettingsModal from '../../components/modals/SettingsModal'
 //   setMessage,
 //   setOpen,
 // } from '../../redux/feature/notification/notificationSlice'
-import TableLoader from '../../components/TableLoader'
-import { SUCCESS } from '../../redux/feature/notification/constant'
+import TableLoader from '../../components/table/TableLoader'
+import { SUCCESS } from '../../constant/constant'
 import { setNotification } from '../../redux/feature/notification/notificationSlice'
 import {
-  useAddCompanyMutation,
-  useGetCompanyMetaInfoQuery,
-  useUpdateCompanyMutation,
+    useAddCompanyMutation,
+    useGetCompanyMetaInfoQuery,
+    useUpdateCompanyMutation,
 } from '../../redux/feature/settings/settingsApi'
 import { clearMetaInfo } from '../../utils/clearData'
 import SettingInput from './_components/SettingsInput'

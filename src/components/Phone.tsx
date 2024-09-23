@@ -1,6 +1,5 @@
 import { useTheme } from '@mui/material'
 import PhoneInput from 'react-phone-input-2'
-import { useAppSelector } from '../redux/hook'
 
 export default function Phone({
     selectedCountry,
@@ -9,7 +8,7 @@ export default function Phone({
 }:any) {
     const theme = useTheme()
     const mode = theme?.palette?.mode
-    const { preferredCountries } = useAppSelector(state => state.booking)
+    // const { preferredCountries } = useAppSelector(state => state.booking)
 
     const containerStyle = {
         display: 'flex',
@@ -46,7 +45,7 @@ export default function Phone({
                 Phone*
             </label>
             <PhoneInput
-                onlyCountries={preferredCountries}
+                onlyCountries={[]}
                 country={selectedCountry}
                 onChange={handlePhone}
 

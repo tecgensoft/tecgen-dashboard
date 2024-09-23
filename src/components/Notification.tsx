@@ -5,7 +5,7 @@
 import MuiAlert from '@mui/material/Alert'
 import Snackbar from '@mui/material/Snackbar'
 import React from 'react'
-import { SUCCESS } from '../redux/feature/notification/constant'
+import { SUCCESS } from '../constant/constant'
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />

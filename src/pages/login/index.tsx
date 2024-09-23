@@ -1,8 +1,6 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-// @ts-nocheck 
+
 import { Visibility, VisibilityOff } from '@mui/icons-material'
 import {
-  Alert,
   Box,
   Button,
   Card,
@@ -16,20 +14,15 @@ import {
   Typography,
   styled,
   useMediaQuery,
-  useTheme,
+  useTheme
 } from '@mui/material'
 import React, { useState } from 'react'
-import login_bg from '../../assets/login_bg.jpg'
-import logo from '../../assets/logo_dark.png'
 import Toastify from '../../components/Toastify'
-import { userLogin } from '../../redux/feature/auth/authAction'
-import { SUCCESS } from '../../redux/feature/notification/constant'
-import { setNotification } from '../../redux/feature/notification/notificationSlice'
-import { useAppDispatch, useAppSelector } from '../../redux/hook'
+import { useLoginMutation } from '../../redux/feature/auth/authApi'
 
 interface ILoginFormError {
-  email: string | null
-  password: string | null
+  email: string | undefined | null
+  password: string | undefined | null
 }
 interface ILoginForm {
   email: string
@@ -59,11 +52,12 @@ const InputField = styled(TextField)({
 
 export default function Login() {
   const theme = useTheme()
+  const [login] = useLoginMutation()
   const [isLoading, setLoading] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'))
-  const dispatch = useAppDispatch()
-  const { error, success } = useAppSelector(state => state.auth)
+
+
   // login error state
   const [userInfoError, setUserInfoError] = useState<ILoginFormError>({
     email: null,
@@ -77,7 +71,6 @@ export default function Login() {
 
   // handle Change function to take login information
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // login information store in state
     setUserInfo({ ...userInfo, [e.target.name]: e.target.value })
   }
 
@@ -86,14 +79,17 @@ export default function Login() {
     const { email, password } = userInfo
     let emailError
     let passwordError
-    if (email !== '' && email) {
-      emailError = !/^[a-zA-Z0-9._:$!%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]+$/.test(
-        email,
-      )
-        ? 'Invalid e-mail address'
-        : null
-    } else {
+    if(email === ''){
       emailError = 'E-mail is required.'
+      // if (email !== '' && email) {
+      //   emailError = !/^[a-zA-Z0-9._:$!%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]+$/.test(
+      //     email,
+      //   )
+      //     ? 'Invalid e-mail address'
+      //     : null
+      // } else {
+      //   emailError = 'E-mail is required.'
+      // }
     }
     if (password !== '' && password) {
       passwordError =
@@ -111,23 +107,8 @@ export default function Login() {
     e.preventDefault()
     if (validateForm()) {
       setLoading(true)
-      dispatch(userLogin(userInfo)).then((res) => {
-        if(res?.error) {
-          setLoading(false)
-        }
-        dispatch(
-          setNotification({
-            open: true,
-            message: 'Login Successful!',
-            type: SUCCESS,
-          }),
-        )
-      }).catch(() => {
-        console.log('errors')
-        setLoading(false)
-      })
+      login(userInfo)
     }
-    // setLoading(false)
   }
   const handleClickShowPassword = () => {
     setShowPassword(prevShowPassword => !prevShowPassword)
@@ -136,20 +117,17 @@ export default function Login() {
   const handleMouseDownPassword = (event: any) => {
     event.preventDefault()
   }
-  // if(isLoading){
-  //   return <Loader/>
-  // }
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <Toastify isShow={success} message="Login successfully done." />
-      <img
+      <Toastify isShow={false} message="Login successfully done." />
+      {/* <img
         src={logo}
         style={{
           position: 'absolute',
           left: '50px',
           top: '50px',
         }}
-      />
+      /> */}
       <Grid container sx={{ height: '100vh' }}>
         <Grid
           item
@@ -228,7 +206,7 @@ export default function Login() {
                   ),
                 }}
               />
-              {error && <Alert severity="error">{error}</Alert>}
+              {/* {error && <Alert severity="error">{error}</Alert>} */}
 
               <FormControlLabel
                 control={
@@ -250,23 +228,16 @@ export default function Login() {
                   padding: '15px 0px',
                 }}
               >
-                {isLoading ? <CircularProgress size={'20px'} sx={{color:"white"}} /> : 'Log In'}
-                
-                {/* <CircularProgress  /> */}
+                {isLoading ? (
+                  <CircularProgress size={'20px'} sx={{ color: 'white' }} />
+                ) : (
+                  'Log In'
+                )}
               </Button>
             </Box>
           </Card>
-          {/* <Button
-                type="button"
-                fullWidth
-                variant="contained"
-                sx={{ mt: 3, mb: 2, boxShadow: 'none', bgcolor: '#EA244E', borderRadius: '8px', padding: '15px 0px' }}
-              
-              >
-                logout
-              </Button> */}
         </Grid>
-        {!isSmallScreen && (
+        {/* {!isSmallScreen && (
           <Grid
             item
             xs={12}
@@ -276,7 +247,7 @@ export default function Login() {
               backgroundSize: 'cover',
             }}
           />
-        )}
+        )} */}
       </Grid>
     </Box>
   )

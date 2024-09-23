@@ -6,17 +6,17 @@ import AddIcon from '@mui/icons-material/Add'
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew'
 import ExpandLessIcon from '@mui/icons-material/ExpandLess'
 import {
-  Box,
-  Button,
-  Collapse,
-  FormControl,
-  FormLabel,
-  Grid,
-  IconButton,
-  TextField,
-  Typography,
-  useMediaQuery,
-  useTheme,
+    Box,
+    Button,
+    Collapse,
+    FormControl,
+    FormLabel,
+    Grid,
+    IconButton,
+    TextField,
+    Typography,
+    useMediaQuery,
+    useTheme,
 } from '@mui/material'
 import { GridExpandMoreIcon } from '@mui/x-data-grid'
 import { SyntheticEvent, useCallback, useEffect, useState } from 'react'
@@ -27,9 +27,9 @@ import duplicateImg from '../../../../assets/duplicateImg.png'
 import lotImg from '../../../../assets/lot.png'
 import lotImgDark from '../../../../assets/lotImgDark.png'
 import { AutoCompleteField } from '../../../../components/AutoCompleteField'
-import TableLoader from '../../../../components/TableLoader'
 import ConfirmDeleteModal from '../../../../components/modals/ConfirmDeleteModal'
 import ConfirmDuplicationPopup from '../../../../components/modals/ConfirmDuplicationPopup '
+import TableLoader from '../../../../components/table/TableLoader'
 import { useCreateBookingMutation } from '../../../../redux/feature/booking/bookingApi'
 import { resetBooking } from '../../../../redux/feature/booking/bookingSlice'
 import { useGetProductForLotQuery } from '../../../../redux/feature/lot/lotApi'
@@ -39,41 +39,41 @@ import { useGetProductForLotQuery } from '../../../../redux/feature/lot/lotApi'
 //   setOpen,
 // } from '../../../../redux/feature/notification/notificationSlice'
 import {
-  DANGER,
-  SUCCESS,
-  WARNING,
-} from '../../../../redux/feature/notification/constant'
+    DANGER,
+    SUCCESS,
+    WARNING,
+} from '../../../../constant/constant'
 import { setNotification } from '../../../../redux/feature/notification/notificationSlice'
 import {
-  setFrom,
-  setIsBookingCreated,
+    setFrom,
+    setIsBookingCreated,
 } from '../../../../redux/feature/payment/paymentSlice'
 import { setStep } from '../../../../redux/feature/stepper/stepperSlice'
 import { useAppDispatch, useAppSelector } from '../../../../redux/hook'
 import useDebounce from '../../../../utils/useDebounce'
 import {
-  chargeInputData,
-  lotGrossInputData,
-  lotInputData,
+    chargeInputData,
+    lotGrossInputData,
+    lotInputData,
 } from '../../constant/lotData'
 import {
-  handleAddLot,
-  handleAddProduct,
-  handleCancel,
-  handleChargeChange,
-  handleDeleteLot,
-  handleDeleteProduct,
-  handleDuplicateLot,
-  handleProductChange,
-  handleProductCustomChange,
-  handleProductGrossChange,
-  handleToggle,
+    handleAddLot,
+    handleAddProduct,
+    handleCancel,
+    handleChargeChange,
+    handleDeleteLot,
+    handleDeleteProduct,
+    handleDuplicateLot,
+    handleProductChange,
+    handleProductCustomChange,
+    handleProductGrossChange,
+    handleToggle,
 } from '../handler/lotManageHandler'
 import {
-  getError,
-  getGrossError,
-  initialError,
-  validateAndSetErrors,
+    getError,
+    getGrossError,
+    initialError,
+    validateAndSetErrors,
 } from '../handler/lotValidationHandler'
 import '../style.css'
 import LotInputField from './LotInputField'

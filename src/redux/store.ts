@@ -1,6 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-// @ts-nocheck 
 import {
   EnhancedStore,
   StoreEnhancer,
@@ -11,53 +8,32 @@ import {
 } from '@reduxjs/toolkit'
 
 import { CombinedState } from '@reduxjs/toolkit/query'
-import { getUserData } from '../utils/getUser'
+
 import { api } from './api/apiSlice'
 import authReducer, { IInitialState } from './feature/auth/authSlice'
-import userReducer from './feature/user/userSlice'
-import bookingReducer from './feature/booking/bookingSlice'
-import branchReducer from './feature/brances/branchesSlice'
 import notificationReducer, {
   INotification,
 } from './feature/notification/notificationSlice'
-import expenseReducer from './feature/officeExpense/officeExpenseSlice'
-import paymentReducer from "./feature/payment/paymentSlice"
-import printReducer from './feature/print/printSlice'
-import selectReducer from "./feature/product/ProductSlice"
-import searchReducer, { IText } from './feature/search/searchSlice'
-import shipmentReducer from './feature/shipment/shipmentSlice'
-import stepperReducer from "./feature/stepper/stepperSlice"
+import openSlice from './feature/open/openSlice'
+import stepperReducer from './feature/stepper/stepperSlice'
 import themeReducer, { ITheme } from './feature/theme/themeSlice'
-import trackingReducer from './feature/tracking/trackingSlice'
-const token = localStorage.getItem('token')
 
 const initialState: IInitialState = {
   loading: false,
-  userInfo: getUserData(token),
-  userToken: token,
   error: null,
   success: false,
+  message: '',
 }
 
 const store: EnhancedStore<
   {
-    search: any
     api: CombinedState<{}, never, 'api'>
     auth: IInitialState
     theme: ITheme
-    print: any
-    booking: any
     notification: any
-    payment: any
     stepper: any
-    select: any
-    tracking: any
-    expense: any
-    shipment: any
-    branch: branch
-    user: any
+    open: any
   },
-
   UnknownAction,
   Tuple<
     [
@@ -67,17 +43,9 @@ const store: EnhancedStore<
             api: CombinedState<{}, never, 'api'>
             auth: IInitialState
             theme: ITheme
-            print: any
-            search: IText
             notification: INotification
-            payment: any
             stepper: any
-            select: any
-            tracking: any
-            expense: any
-            shipment: any
-            branch: branch
-            user:any
+            open: any
           },
           undefined,
           UnknownAction
@@ -91,18 +59,9 @@ const store: EnhancedStore<
     [api.reducerPath]: api.reducer,
     auth: authReducer,
     theme: themeReducer,
-    print: printReducer,
-    search: searchReducer,
-    booking: bookingReducer,
     notification: notificationReducer,
-    payment: paymentReducer,
     stepper: stepperReducer,
-    select: selectReducer,
-    tracking: trackingReducer,
-    expense: expenseReducer,
-    shipment: shipmentReducer,
-    branch: branchReducer,
-    user: userReducer
+    open: openSlice,
   },
   preloadedState: {
     auth: initialState,

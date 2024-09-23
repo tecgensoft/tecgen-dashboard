@@ -4,12 +4,10 @@ import {
   Grid,
   Typography,
   useMediaQuery,
-  useTheme
+  useTheme,
 } from '@mui/material'
-import DataTable from './_component/Table'
 
 import AddIcon from '@mui/icons-material/Add'
-
 
 export default function BookingList() {
   const theme = useTheme()
@@ -24,44 +22,40 @@ export default function BookingList() {
         padding: '16px',
       }}
     >
-      <Grid container>
-      <Grid item  lg={6} sx={{ textAlign: 'left' }}>
-      <Typography
-        variant="subtitle1"
-        sx={{ fontWeight: 500, marginBottom: '32px' }}
-      >
-        Category List
-      </Typography>
-      </Grid> 
-      <Grid item lg={6} sx={{ textAlign: 'right' }}>
-            <Button
-              variant="contained"
-              startIcon={<AddIcon />}
-              sx={{
+      <Grid container alignItems="center">
+        <Grid item md={6} sx={{ textAlign: 'left' }}>
+          <Typography variant="subtitle1" sx={{ fontWeight: 500 }}>
+            Category List
+          </Typography>
+        </Grid>
+        <Grid item md={6} sx={{ textAlign: 'right' }}>
+          <Button
+            variant="contained"
+            startIcon={<AddIcon />}
+            sx={{
+              backgroundColor:
+                theme.palette.mode === 'dark'
+                  ? theme.palette.primary.main
+                  : theme.palette.secondary.main,
+              '&:hover': {
                 backgroundColor:
                   theme.palette.mode === 'dark'
                     ? theme.palette.primary.main
                     : theme.palette.secondary.main,
-                '&:hover': {
-                  backgroundColor:
-                    theme.palette.mode === 'dark'
-                      ? theme.palette.primary.main
-                      : theme.palette.secondary.main,
-                },
-                padding: '0px 16px',
-                borderRadius: '8px',
-                width: isLargeScreen ? '100%' : 'auto',
-                height: '38px',
-                textTransform: 'capitalize',
-                marginBottom: '10px',
-              }}
-            >
-              Create
-            </Button>
-          </Grid>
+              },
+              padding: '0px 16px',
+              borderRadius: '8px',
+              width: isLargeScreen ? '40%' : 'auto',
+              height: '38px',
+              textTransform: 'capitalize',
+            }}
+          >
+            Create
+          </Button>
+        </Grid>
       </Grid>
 
-      <DataTable search={'text'} />
+      {/* <DataTable search={'text'} /> */}
     </Box>
   )
 }

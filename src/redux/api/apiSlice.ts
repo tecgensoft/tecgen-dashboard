@@ -19,9 +19,9 @@ export const api = createApi({
             //     token = data?.jwtToken
             //   })
             // } 
-            if (token) {
-                headers.set("Authorization", `Bearer ${token}`);
-            }
+            // if (token) {
+            //     headers.set("Authorization", `Bearer ${token}`);
+            // }
             return headers;
         },
     }),

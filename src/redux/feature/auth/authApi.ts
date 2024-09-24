@@ -10,7 +10,7 @@ export const authApi = api.injectEndpoints({
           password: data.password
         }
         return {
-          url: '/user/signin',
+          url: '/user/signin/',
           method: 'POST',
           body: loginObj,
         }

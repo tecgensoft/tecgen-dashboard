@@ -11,9 +11,10 @@ import NotFound from '../pages/notFound'
 
 import BookingList from '../pages/booking/bookingList'
 
+import Category from '../pages/Category'
+import Store from '../pages/Store'
 import Authenticate from './AuthenticateRoute'
 import PrivateRoute from './PrivateRoute'
-import Category from '../pages/Category'
 const routes = createBrowserRouter([
   {
     path: '/',
@@ -35,6 +36,14 @@ const routes = createBrowserRouter([
         element: (
           <PrivateRoute>
             <Dashboard />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path:"/store",
+        element: (
+          <PrivateRoute>
+            <Store />
           </PrivateRoute>
         ),
       },

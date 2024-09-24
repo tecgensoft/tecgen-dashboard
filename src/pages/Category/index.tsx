@@ -15,8 +15,7 @@ export default function Category() {
     >
       <TableHeader tableTitle="Category List" />
       <Table  columns={CategoryColumn()}/>
-      {/* <DataTable search={'text'} /> */}
-      <ModalView>
+      <ModalView headerTitle='Create category'>
         <CategoryCreateANDUpdate />
       </ModalView>
     </Box>

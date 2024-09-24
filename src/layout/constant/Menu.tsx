@@ -30,6 +30,18 @@ const Menu = () => {
     {
       icon: (
         <img
+          src={dashboardIcon}
+          alt="Dashboard"
+          style={{ width: '24px', height: '24px' }}
+        />
+      ),
+      title: 'Store',
+      items: [],
+      to: '/store',
+    },
+    {
+      icon: (
+        <img
           src={productIcon}
           alt="category"
           style={{ width: '24px', height: '24px' }}

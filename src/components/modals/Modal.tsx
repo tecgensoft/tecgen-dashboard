@@ -46,7 +46,7 @@ export default function ModalView({
       <Box
         sx={{
           ...style,
-          width: { xs: '95%', sm: '85%', md: '70%', lg: '50%', xl: '50%' },
+          width: { xs: '95%', sm: '85%', md: '70%', lg: '40%', xl: '40%' },
           maxHeight: '95vh',
           overflowY: 'auto',
           bgcolor: theme =>
@@ -55,7 +55,7 @@ export default function ModalView({
       >
         <Box
           display="flex"
-          justifyContent="center"
+          justifyContent="left"
           alignItems={'center'}
           sx={{ position: 'relative' }}
           pt={6}
@@ -67,6 +67,7 @@ export default function ModalView({
               fontSize: '16px',
               fontWeight: '500',
               color: '#0E141F',
+              paddingLeft: '18px',
               //   color: `${mode ? '#fff' : "'#0E141F'"}`,
             }}
           >

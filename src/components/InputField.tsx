@@ -61,7 +61,7 @@ const InputField: React.FC<StyledInputProps> = ({
   return (
     <Box>
 
-      {label && <Typography sx={{color:"#0D0D0D", mb:"8px", fontSize:"14px"}}>{label}</Typography>}
+      {label && <Typography sx={{color:"#0D0D0D", mb:"8px", fontSize:"14px"}}>{label}{required && <Box component='span' color={'red'} >*</Box>}</Typography>}
       <InputFieldComponent
         type={type}
         helperText={helperText}

@@ -52,8 +52,8 @@ const InputField = styled(TextField)({
 
 export default function Login() {
   const theme = useTheme()
-  const [login] = useLoginMutation()
-  const [isLoading, setLoading] = useState(false)
+  const [login, {isLoading}] = useLoginMutation()
+  // const [isLoading, setLoading] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'))
 
@@ -106,7 +106,7 @@ export default function Login() {
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = e => {
     e.preventDefault()
     if (validateForm()) {
-      setLoading(true)
+      // setLoading(true)
       login(userInfo)
     }
   }

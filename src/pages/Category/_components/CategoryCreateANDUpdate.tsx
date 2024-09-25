@@ -3,12 +3,13 @@ import { useState } from 'react';
 import ImageField from '../../../components/ImageField';
 import InputField from '../../../components/InputField';
 import SwitchField from '../../../components/modals/Switch';
-import { useImgUploadMutation } from '../../../redux/feature/imageUpload/imageUploadApi';
+import { useImgDeleteMutation, useImgUploadMutation } from '../../../redux/feature/imageUpload/imageUploadApi';
 
 export default function CategoryCreateANDUpdate() {
   const [imageList, setImageList] = useState<string[]>([])
   const [imgUpload] = useImgUploadMutation()
-  console.log(imageList)
+  const [imgDelete] = useImgDeleteMutation()
+  // console.log(imageList)
   const handleImageUpload = (files: File[] | null) => {
     if (files) {
       // console.log('Uploaded files:', files);
@@ -30,13 +31,16 @@ export default function CategoryCreateANDUpdate() {
       console.log('No valid files selected');
     }
   };
-  const handleRemoveImage = (index: number, preview:string) => {
+  const handleRemoveImage = async (index: number, preview:string) => {
     const urlSplit = preview?.split(':')[0]
-
     if(urlSplit === 'data'){
-      // console.log('data')
+      // console.log('data'){
+
     }else{
       // console.log('http')
+      await imgDelete({
+        image_url: preview
+      })
     }
 };
   return (

@@ -11,7 +11,19 @@ export const imageUploadApi = api.injectEndpoints({
         }
       },
     }),
+    imgDelete: builder.mutation({
+      query: data => {
+        return {
+          url: '/delete-image/',
+          method: 'DELETE',
+          body: JSON.stringify(data),
+          headers: {
+            "Content-Type": "application/json"
+          }
+        }
+      },
+    }),
   }),
 })
 
-export const { useImgUploadMutation } = imageUploadApi
+export const { useImgUploadMutation, useImgDeleteMutation } = imageUploadApi

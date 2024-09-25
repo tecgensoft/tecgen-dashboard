@@ -1,7 +1,8 @@
 import { CloseOutlined } from '@mui/icons-material'
 import ImageIcon from '@mui/icons-material/Image'
 import { Box, Button, Typography } from '@mui/material'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
+import { useImgDeleteMutation, useImgUploadMutation } from '../redux/feature/imageUpload/imageUploadApi'
 interface IImageField {
     label?: string
     onChange?: () => void
@@ -23,91 +24,70 @@ export default function ImageField({
     const [isTouched, setIsTouched] = useState<boolean>(false)
     const maxFileSize = 3 * 1024 * 1024
     const allowedTypes = ['image/jpeg', 'image/png']
-// console.log(previews)
-    // if old image is exits.
-    useEffect(() => {
-        setPreviews(imagesList)
-    }, [imagesList])
+    const [imgUpload] = useImgUploadMutation()
+  const [imgDelete] = useImgDeleteMutation()
 
-    const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const selectedFiles = event.target.files
-        setIsTouched(true)
+    const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+        const selectedFiles = event.target.files;
+        setIsTouched(true);
+    
         if (selectedFiles) {
-            const newFiles: File[] = Array.from(selectedFiles)
-            let validFiles: File[] = []
-            let errorMessages: string[] = []
-
-            newFiles.forEach(file => {
-                if (!allowedTypes.includes(file.type)) {
-                    errorMessages.push(
-                        `Unsupported file type for ${file.name}. Please upload ${allowedTypes.join(' or ')} files.`,
-                    )
-                    return
-                }
-
-                // Validate file size
-                if (file.size > maxFileSize) {
-                    errorMessages.push(
-                        `File size of ${file.name} exceeds the limit of ${maxFileSize / (1024 * 1024)}MB.`,
-                    )
-                    return
-                }
-
-                validFiles.push(file)
-            })
-
-            // Set previews for valid files
-            const newPreviews: string[] = []
-            validFiles.forEach(file => {
-                const reader = new FileReader()
-                reader.onloadend = () => {
-                    newPreviews.push(reader.result as string)
-                    if (newPreviews.length === validFiles.length) {
-                        setFiles(prev => [...prev, ...validFiles])
-                        setPreviews(prev => [...prev, ...newPreviews])
-                        if (onImageUpload) onImageUpload([...files, ...validFiles])
-                    }
-                }
-                reader.readAsDataURL(file)
-            })
-
-            // Handle errors
-            if (errorMessages.length > 0) {
-                setError(errorMessages.join(' '))
-                setPreviews([])
-                if (onImageUpload) onImageUpload(null)
-            } else {
-                setError(null)
+          const newFiles: File[] = Array.from(selectedFiles);
+          let validFiles: File[] = [];
+          let errorMessages: string[] = [];
+    
+          newFiles.forEach((file) => {
+            if (!allowedTypes.includes(file.type)) {
+              errorMessages.push(
+                `Unsupported file type for ${file.name}. Please upload ${allowedTypes.join(' or ')} files.`,
+              );
+              return;
             }
-        } else {
-            setPreviews([])
-            setFiles([])
-            if (onImageUpload) onImageUpload(null)
-            if (required) {
-                setError('This field is required.')
-            } else {
-                setError(null)
+    
+            if (file.size > maxFileSize) {
+              errorMessages.push(
+                `File size of ${file.name} exceeds the limit of ${maxFileSize / (1024 * 1024)}MB.`,
+              );
+              return;
             }
+    
+            validFiles.push(file);
+          });
+    
+          if (errorMessages.length > 0) {
+            setError(errorMessages.join(' '));
+            return;
+          }
+    
+          setError(null);
+    
+          for (const file of validFiles) {
+            const formData = new FormData();
+            formData.append('image', file)
+            const res = await imgUpload(formData)
+            const img_url = res?.data?.image_url
+            // console.log(img_url)
+            if (img_url) {
+              setPreviews((prev) => [...prev, img_url]);
+            }
+          }
         }
-    }
+      };
 
-    // const handleRemoveImage = (index: number) => {
-    //     const newFiles = [...files]
-    //     const newPreviews = [...previews]
-
-    //     newFiles.splice(index, 1)
-    //     newPreviews.splice(index, 1)
-
-    //     setFiles(newFiles)
-    //     setPreviews(newPreviews)
-
-    //     if (onImageUpload) onImageUpload(newFiles.length > 0 ? newFiles : null)
-    // }
-
+      const handleRemoveImage = async (index: number, imageUrl: string) => {
+        if(imageUrl){
+            await imgDelete({
+                image_url: imageUrl
+            }).then(res => {
+                if(res.data){
+                    const updatedPreviews = previews.filter((_, i) => i !== index);
+                    setPreviews(updatedPreviews)
+                }
+            })
+        }
+      };
     const handleBlur = () => {
         setIsTouched(true)
-
-        // If the field is required but no file is selected, show an error
         if (required && previews.length === 0) {
             setError('This field is required.')
         }
@@ -177,11 +157,7 @@ export default function ImageField({
                                 }}
                             />
                             <Button
-                                onClick={() => {
-                                    removeImage && removeImage(index, preview); 
-                                    setPreviews((prev) => prev.filter((_, i) => i !== index)); 
-                                    setFiles((prev) => prev.filter((_, i) => i !== index)); 
-                                }}
+                                onClick={() => handleRemoveImage(index, preview)}
                                 color="error"
                                 size="small"
                                 sx={{

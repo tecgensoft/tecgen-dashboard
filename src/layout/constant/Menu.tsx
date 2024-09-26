@@ -11,7 +11,8 @@ const productIcon =
 // const trackingIcon = 'https://i.ibb.co/6bfFz7S/tracking.png'
 // const shipmentsIcon = 'https://i.ibb.co/804kdL6/shipments.png'
 // const expansesIcon = 'https://i.ibb.co/XLmNpJr/expanses.png'
-const settingsIcon = 'https://res.cloudinary.com/minhajur-rohoman/image/upload/v1726814918/setting_fopbxb.png'
+const settingsIcon =
+  'https://res.cloudinary.com/minhajur-rohoman/image/upload/v1726814918/setting_fopbxb.png'
 
 const Menu = () => {
   const menu: IMenuItemType[] = [
@@ -36,8 +37,10 @@ const Menu = () => {
         />
       ),
       title: 'Store',
-      items: [],
-      to: '/store',
+      items: [
+        { title: 'Add Store', items: [], to: '/category/manage-category' },
+        { title: 'Store List', items: [], to: '/category/manage-subcategory' },
+      ],
     },
     {
       icon: (
@@ -47,25 +50,28 @@ const Menu = () => {
           style={{ width: '24px', height: '24px' }}
         />
       ),
-      title: 'Category',
-      items: [        
-        { title: 'Mange Category', items: [], to: '/category/manage-category' },
-        { title: 'Mange Subcategory', items: [], to: '/category/manage-subcategory' },
+      title: 'Product Management',
+      items: [
+        { title: 'Category', items: [], to: '/category/manage-category' },
+        { title: 'Subcategory', items: [], to: '/category/manage-subcategory' },
+        { title: 'Brand', items: [], to: '/brand/manage-brands' },
+        { title: 'Attribute', items: [], to: '/brand/manage-brands' },
+        { title: 'Attribute Value', items: [], to: '/brand/manage-brands' },
       ],
     },
-    {
-      icon: (
-        <img
-          src={productIcon}
-          alt="brand"
-          style={{ width: '24px', height: '24px' }}
-        />
-      ),
-      title: 'Brand',
-      items: [        
-        { title: 'Mange Brand', items: [], to: '/brand/manage-brands' },
-      ],
-    },
+    // {
+    //   icon: (
+    //     <img
+    //       src={productIcon}
+    //       alt="brand"
+    //       style={{ width: '24px', height: '24px' }}
+    //     />
+    //   ),
+    //   title: 'Brand',
+    //   items: [
+    //     { title: 'Mange Brand', items: [], to: '/brand/manage-brands' },
+    //   ],
+    // },
     {
       icon: (
         <img
@@ -76,12 +82,12 @@ const Menu = () => {
       ),
       title: 'Products',
       items: [
-        { title: 'Mange product', items: [], to: '/products/manage-products' },
         {
           title: 'Add Product',
           items: [],
           to: '/products/add-product',
         },
+        { title: 'Product List', items: [], to: '/products/manage-products' },
       ],
     },
     {
@@ -92,10 +98,24 @@ const Menu = () => {
           style={{ width: '24px', height: '24px' }}
         />
       ),
-      title: 'Orders',
-      items: [{ title: 'Mange Order', items: [], to: '/orders/manage-orders' }],
+      title: 'Orders & Reviews',
+      items: [
+        { title: 'Manage Order', items: [], to: '/orders/manage-orders' },
+        { title: 'Review List', items: [], to: '/orders/manage-orders' },
+      ],
     },
-
+    {
+      icon: (
+        <img
+          src={dashboardIcon}
+          alt="Dashboard"
+          style={{ width: '24px', height: '24px' }}
+        />
+      ),
+      title: 'Reports',
+      items: [],
+      to: '/reports',
+    },
     {
       icon: (
         <img

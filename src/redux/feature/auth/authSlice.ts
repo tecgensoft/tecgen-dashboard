@@ -44,9 +44,9 @@ const authSlice = createSlice({
         );
         builder.addMatcher(
             authApi.endpoints.login.matchRejected,
-            (state) => {
+            (state, payload) => {
                 // const error = (action.payload?.data as IErrorPayload)?.error;
-
+console.log(payload)
                 let errorMessage: string | undefined;
 
                 // if (typeof error === "object" && error !== null) {

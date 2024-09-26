@@ -1,65 +1,85 @@
-import { Box, Divider } from '@mui/material';
-import { useState } from 'react';
-import ImageField from '../../../components/ImageField';
-import InputField from '../../../components/InputField';
-import SwitchField from '../../../components/modals/Switch';
-import { useImgDeleteMutation, useImgUploadMutation } from '../../../redux/feature/imageUpload/imageUploadApi';
+import { Box, Button, Divider } from '@mui/material'
+import { useDispatch } from 'react-redux'
+import ImageField from '../../../components/ImageField'
+import InputField from '../../../components/InputField'
+import SwitchField from '../../../components/modals/Switch'
+import { setOpen } from '../../../redux/feature/open/openSlice'
 
-export default function CategoryCreateANDUpdate() {
-  const [imageList, setImageList] = useState<string[]>([])
-  const [imgUpload] = useImgUploadMutation()
-  const [imgDelete] = useImgDeleteMutation()
-  // console.log(imageList)
-  const handleImageUpload = (files: File[] | null) => {
-    if (files) {
-      // console.log('Uploaded files:', files);
-      
-      for(let item of files){
-        const formdata = new FormData();
-        // console.log(item)
-        formdata.append('image', item)
-        imgUpload(formdata).then(res => {
-          const img = res?.data?.image_url
-          console.log(img)
-          if(res.data){
-            // console.log(res.data)
-            setImageList([...imageList, img])
-          }
-        })
-      }
-    } else {
-      console.log('No valid files selected');
-    }
-  };
-  const handleRemoveImage = async (index: number, preview:string) => {
-    const urlSplit = preview?.split(':')[0]
-    if(urlSplit === 'data'){
-      // console.log('data'){
-
-    }else{
-      // console.log('http')
-      await imgDelete({
-        image_url: preview
-      })
-    }
-};
+export default function CategoryCreateANDUpdate({
+  handleSubmit,
+  handleChange,
+  handleChecked,
+  categoryInfo,
+  errors,
+  buttonValue = 'Create'
+}: any) {
+  const dispatch = useDispatch()
+  console.log(errors)
   return (
-    <Box sx={{
-      display: "flex",
-      flexDirection: "column",
-      gap: "8px"
-    }}>
-      <InputField name='name' label="Category Name" placeholder='Enter category name' required />
-      <Box sx={{
-        display: "flex",
-        flexDirection: "row",
-        gap: "16px"
-      }}>
-        <SwitchField value={true} labelOfChecked='Is Active' />
-        <Divider/>
-        <SwitchField value={true} labelOfChecked='Show in Ecommerce' />
+    <Box
+      component="form"
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '8px',
+      }}
+      onSubmit={handleSubmit}
+    >
+      <InputField
+        name="name"
+        label="Category Name"
+        placeholder="Enter category name"
+        required
+        onChange={handleChange}
+        error={!!errors.name}
+        helperText={errors.name}
+      />
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'row',
+          gap: '16px',
+        }}
+      >
+        <SwitchField
+          onChange={handleChecked}
+          name="is_active"
+          labelOfChecked="Is Active"
+          value={categoryInfo.is_active}
+          // required
+        />
+        <Divider />
+        <SwitchField
+          onChange={handleChecked}
+          name="show_in_ecommerce"
+          labelOfChecked="Show in Ecommerce"
+          value={categoryInfo.show_in_ecommerce}
+        />
       </Box>
-      <ImageField label='Upload Image'  onImageUpload={handleImageUpload} removeImage={handleRemoveImage} imagesList={imageList} />
+      <ImageField label="Upload Icon" />
+      <ImageField label="Upload Logo" />
+      
+      <Box
+          pl={4}
+          pr={4}
+          pb={4}
+          sx={{
+            display: 'flex',
+            justifyContent: 'flex-end',
+            gap: '8px',
+          }}
+        >
+          <Button
+            variant="contained"
+            color="secondary"
+            onClick={() => dispatch(setOpen(!open))}
+          >
+            Close
+          </Button>
+          {<Button type="submit" variant="contained" color="primary">
+            {buttonValue}
+          </Button>}
+        </Box>
     </Box>
   )
 }

@@ -1,97 +1,104 @@
 import { CloseOutlined } from '@mui/icons-material'
 import ImageIcon from '@mui/icons-material/Image'
-import { Box, Button, Typography } from '@mui/material'
-import { useState } from 'react'
-import { useImgDeleteMutation, useImgUploadMutation } from '../redux/feature/imageUpload/imageUploadApi'
+import { Box, Button, CircularProgress, Typography } from '@mui/material'
+import { useEffect, useState } from 'react'
+import {
+    useImgDeleteMutation,
+    useImgUploadMutation,
+} from '../redux/feature/imageUpload/imageUploadApi'
 interface IImageField {
     label?: string
-    onChange?: () => void
     required?: boolean
-    onImageUpload?: (files: File[] | null) => void
-    imagesList?: string[]
-    removeImage?: (index:number, preview: string) => void
 }
 export default function ImageField({
     label,
-    onImageUpload,
-    imagesList = [],
     required,
-    removeImage
 }: IImageField) {
-    const [files, setFiles] = useState<File[]>([])
     const [error, setError] = useState<string | null>(null)
     const [previews, setPreviews] = useState<string[]>([])
     const [isTouched, setIsTouched] = useState<boolean>(false)
+    const [loadingImages, setLoadingImages] = useState<{ [key: string]: boolean }>({});
     const maxFileSize = 3 * 1024 * 1024
     const allowedTypes = ['image/jpeg', 'image/png']
-    const [imgUpload] = useImgUploadMutation()
-  const [imgDelete] = useImgDeleteMutation()
+    const [imgUpload, { isLoading }] = useImgUploadMutation()
+    const [imgDelete] = useImgDeleteMutation()
 
-    const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
-        const selectedFiles = event.target.files;
-        setIsTouched(true);
-    
+    const handleFileChange = async (
+        event: React.ChangeEvent<HTMLInputElement>,
+    ) => {
+        const selectedFiles = event.target.files
+        setIsTouched(true)
+
         if (selectedFiles) {
-          const newFiles: File[] = Array.from(selectedFiles);
-          let validFiles: File[] = [];
-          let errorMessages: string[] = [];
-    
-          newFiles.forEach((file) => {
-            if (!allowedTypes.includes(file.type)) {
-              errorMessages.push(
-                `Unsupported file type for ${file.name}. Please upload ${allowedTypes.join(' or ')} files.`,
-              );
-              return;
-            }
-    
-            if (file.size > maxFileSize) {
-              errorMessages.push(
-                `File size of ${file.name} exceeds the limit of ${maxFileSize / (1024 * 1024)}MB.`,
-              );
-              return;
-            }
-    
-            validFiles.push(file);
-          });
-    
-          if (errorMessages.length > 0) {
-            setError(errorMessages.join(' '));
-            return;
-          }
-    
-          setError(null);
-    
-          for (const file of validFiles) {
-            const formData = new FormData();
-            formData.append('image', file)
-            const res = await imgUpload(formData)
-            const img_url = res?.data?.image_url
-            // console.log(img_url)
-            if (img_url) {
-              setPreviews((prev) => [...prev, img_url]);
-            }
-          }
-        }
-      };
+            const newFiles: File[] = Array.from(selectedFiles)
+            let validFiles: File[] = []
+            let errorMessages: string[] = []
 
-      const handleRemoveImage = async (index: number, imageUrl: string) => {
-        if(imageUrl){
+            newFiles.forEach(file => {
+                if (!allowedTypes.includes(file.type)) {
+                    errorMessages.push(
+                        `Unsupported file type for ${file.name}. Please upload ${allowedTypes.join(' or ')} files.`,
+                    )
+                    return
+                }
+
+                if (file.size > maxFileSize) {
+                    errorMessages.push(
+                        `File size of ${file.name} exceeds the limit of ${maxFileSize / (1024 * 1024)}MB.`,
+                    )
+                    return
+                }
+
+                validFiles.push(file)
+            })
+
+            if (errorMessages.length > 0) {
+                setError(errorMessages.join(' '))
+                return
+            }
+
+            setError(null)
+
+            for (const file of validFiles) {
+                const formData = new FormData()
+                formData.append('image', file)
+                const res = await imgUpload(formData)
+                const img_url = res?.data?.image_url
+                if (img_url) {
+                    setPreviews(prev => [...prev, img_url])
+                }
+            }
+        }
+    }
+
+    const handleRemoveImage = async (index: number, imageUrl: string) => {
+        setLoadingImages(prev => ({ ...prev, [imageUrl]: true }));
+        if (imageUrl) {
             await imgDelete({
-                image_url: imageUrl
+                image_url: imageUrl,
             }).then(res => {
-                if(res.data){
-                    const updatedPreviews = previews.filter((_, i) => i !== index);
+                if (res.data) {
+                    const updatedPreviews = previews.filter((_, i) => i !== index)
                     setPreviews(updatedPreviews)
                 }
-            })
+            }).finally(() => {
+                setLoadingImages(prev => ({ ...prev, [imageUrl]: false })); 
+            });
         }
-      };
+    }
     const handleBlur = () => {
         setIsTouched(true)
         if (required && previews.length === 0) {
             setError('This field is required.')
         }
     }
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setError('')
+        },3000);    
+        return () => clearTimeout(timer);
+    }, [error])
     return (
         <Box>
             {label && (
@@ -109,10 +116,26 @@ export default function ImageField({
                         display: 'flex',
                         flexDirection: 'column',
                         gap: '4px',
+                        position: "relative"
                     }}
                     component="label"
                     onBlur={handleBlur}
                 >
+                    {isLoading && <Box
+                        sx={{
+                            position: 'absolute',
+                            width: '65px',
+                            height: '65px',
+                            display: 'flex',
+                            top: '0px',
+                            left: '0px',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            background: "#32976a40"
+                        }}
+                    >
+                        <CircularProgress size={'20px'} sx={{ color: 'white' }} />
+                    </Box>}
                     <ImageIcon />
                     <Box
                         component={'span'}
@@ -147,6 +170,21 @@ export default function ImageField({
                                 p: 1,
                             }}
                         >
+                            {loadingImages[preview] && <Box
+                                sx={{
+                                    position: 'absolute',
+                                    width: '65px',
+                                    height: '65px',
+                                    display: 'flex',
+                                    top: '0px',
+                                    left: '0px',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    background: "#d32f2f40",
+                                }}
+                            >
+                                <CircularProgress size={'20px'} sx={{ color: 'white' }} />
+                            </Box>}
                             <img
                                 src={preview}
                                 alt={`Preview ${index + 1}`}
@@ -163,10 +201,17 @@ export default function ImageField({
                                 sx={{
                                     position: 'absolute',
                                     top: 0,
-                                    right: -5,
-                                    minWidth: '24px',
+                                    right: 0,
+                                    minWidth: '18px',
+                                    minHeight:"18px",
                                     padding: '0',
                                     lineHeight: '1',
+                                    background:"white",
+                                    'box-shadow': '0px 0px 3px 0px #32976a',
+                                    display:"flex",
+                                    alignItems:"center",
+                                    justifyContent:"center",
+                                    borderRadius:"50%"
                                 }}
                             >
                                 <CloseOutlined sx={{ fontSize: '16px', fontWeight: 'bold' }} />

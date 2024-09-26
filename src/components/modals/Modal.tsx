@@ -23,13 +23,12 @@ const style = {
 export default function ModalView({
   children,
   headerTitle= 'Quick View',
-  buttonValue = 'Create',
-  onClick
+  isShowClose = false
+  
 }: {
   children: React.ReactNode;
   headerTitle?: string;
-  buttonValue?: string;
-  onClick?: () => void
+  isShowClose?: boolean
 }) {
   const { open } = useAppSelector(state => state.open)
   const dispatch = useDispatch()
@@ -42,6 +41,7 @@ export default function ModalView({
           backgroundColor: 'rgba(0, 0, 0, 0.596)',
         },
       }}
+      
     >
       <Box
         sx={{
@@ -97,16 +97,16 @@ export default function ModalView({
             gap: '8px',
           }}
         >
-          <Button
+          {isShowClose && <Button
             variant="contained"
             color="secondary"
             onClick={() => dispatch(setOpen(!open))}
           >
             Close
-          </Button>
-          <Button variant="contained" color="primary" onClick={onClick}>
+          </Button>}
+          {/* {<Button type="submit" variant="contained" color="primary">
             {buttonValue}
-          </Button>
+          </Button>} */}
         </Box>
       </Box>
     </Modal>

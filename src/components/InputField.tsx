@@ -12,7 +12,7 @@ interface StyledInputProps {
   disable?: boolean
   error?: boolean
   helperText?: string
-  onChange?: () => void
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
   required?: boolean
   inputLabel?: string
 }
@@ -75,7 +75,6 @@ const InputField: React.FC<StyledInputProps> = ({
         placeholder={placeholder && placeholder}
         disabled={disable}
         onChange={onChange}
-        required={required}
       />
     </Box>
   )

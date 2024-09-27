@@ -17,7 +17,7 @@ export default function PrivateRoute({
   if (loading) {
     return <Loader />
   }
-
+console.log('ok')
   if (userInfo) {
     return <>{children}</>
   }

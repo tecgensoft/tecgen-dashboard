@@ -101,7 +101,7 @@ const Menu = () => {
       title: 'Orders & Reviews',
       items: [
         { title: 'Manage Order', items: [], to: '/orders/manage-orders' },
-        { title: 'Review List', items: [], to: '/orders/manage-orders' },
+        { title: 'Review List', items: [], to: '/orders/manage-reviews' },
       ],
     },
     {

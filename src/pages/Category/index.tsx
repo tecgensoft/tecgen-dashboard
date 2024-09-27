@@ -5,16 +5,20 @@ import Table from '../../components/table/Table'
 import TableHeader from '../../components/table/TableHeader'
 import CategoryColumn from './_components/CategoryColumn'
 import CategoryCreateANDUpdate from './_components/CategoryCreateANDUpdate'
+
+
 interface ICategoryInfo {
   name: string
   images: string[]
   is_active: boolean
   show_in_ecommerce: boolean
 }
+
 export default function Category() {
+  // const { data } = useGetCategoryQuery(undefined)
   const [errors, setErrors] = useState<{
-    [key: string]: string | null | undefined;
-}>({});
+    [key: string]: string | null | undefined
+  }>({})
   const [categoryInfo, setCategoryInfo] = useState<ICategoryInfo>({
     name: '',
     images: [],
@@ -27,38 +31,35 @@ export default function Category() {
     setCategoryInfo({ ...categoryInfo, [e.target.name]: e.target.value })
     setErrors({
       ...errors,
-      [e.target.name]: "",
-  });
+      [e.target.name]: '',
+    })
   }
   // handle checked function
   const handleChecked = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCategoryInfo({ ...categoryInfo, [e.target.name]: e.target.checked })
   }
+
   const validateForm = () => {
     let errors: {
-        name: string | null | undefined;
+      name: string | null | undefined
     } = {
-        name: undefined,
-    };
+      name: undefined,
+    }
 
     if (!categoryInfo.name) {
-        errors.name = "Category name is required";
-    } 
-    setErrors(errors);
+      errors.name = 'Category name is required'
+    }
+    setErrors(errors)
 
-    const hasErrors = Object.values(errors).some(
-        (error) => error !== undefined
-    );
-    return !hasErrors;
-};
-
-
+    const hasErrors = Object.values(errors).some(error => error !== undefined)
+    return !hasErrors
+  }
 
   // handle submit function
-  const handleSubmit = (e:Event) => {
+  const handleSubmit = (e: Event) => {
     e.preventDefault()
     console.log('ok')
-    if(validateForm()){
+    if (validateForm()) {
     }
   }
 

@@ -2,10 +2,12 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import PersonIcon from '@mui/icons-material/Person';
 import { Box, Menu, MenuItem, Typography } from '@mui/material';
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { logout } from '../../redux/feature/auth/authSlice';
 // import { logout } from '../../redux/feature/auth/authSlice';
 export default function Profile() {
   const [anchorEl, setAnchorEl] = useState(null)
-
+  const dispatch = useDispatch()
   const handleClick = (event:any) => {
     setAnchorEl(event.currentTarget)
   }
@@ -51,7 +53,7 @@ export default function Profile() {
           <Typography variant="body1"  sx={{textTransform:"capitalize", fontSize:"14px", fontWidth:'bold'}}></Typography>
         </Box>
 
-        <MenuItem   sx={{textTransform:"capitalize", fontSize:"14px", fontWidth:'bold'}}><LogoutIcon sx={{textTransform:"capitalize", fontSize:"14px", fontWidth:'bold', margin:"0 2px"}}></LogoutIcon>Logout</MenuItem>
+        <MenuItem  onClick={() => dispatch(logout())}  sx={{textTransform:"capitalize", fontSize:"14px", fontWidth:'bold'}}><LogoutIcon sx={{textTransform:"capitalize", fontSize:"14px", fontWidth:'bold', margin:"0 2px"}}></LogoutIcon>Logout</MenuItem>
       </Menu>
     </Box>
   )

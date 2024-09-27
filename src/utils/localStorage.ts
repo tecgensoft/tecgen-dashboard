@@ -11,9 +11,24 @@ export const getTokens = () => {
   return { access, refresh }
 }
 export const clearTokens = () => {
-  localStorage.removeItem('token')
-  localStorage.removeItem('refreshToken')
+  localStorage.removeItem('access')
+  localStorage.removeItem('refresh')
 }
 export const getToken = (name: string) => {
   return localStorage.getItem(name)
+}
+
+export const setUserInfo = (email: string, username: string) => {
+  localStorage.setItem(
+    'userinfo',
+    JSON.stringify({
+      email: email,
+      username: username
+    }),
+  )
+}
+export const clearUserInfo = () => {
+  localStorage.removeItem(
+    'userinfo'
+  )
 }

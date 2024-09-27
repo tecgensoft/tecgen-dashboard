@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { clearTokens, clearUserInfo } from "../../../utils/localStorage";
 import { authApi } from "./authApi";
 // interface IErrorPayload {
 //     error?: {
@@ -12,6 +13,11 @@ export interface IInitialState {
     error: undefined | null | string;
     message: null | string;
     success: boolean;
+    token: string | null,
+    userInfo: {
+        email: string | null;
+        username: string | null
+    }
 }
 
 export const initialState: IInitialState = {
@@ -19,6 +25,11 @@ export const initialState: IInitialState = {
     error: null,
     message: null,
     success: false,
+    token: "",
+    userInfo: {
+        email: '',
+        username: ''
+    }
 };
 const authSlice = createSlice({
     name: "auth",
@@ -27,6 +38,12 @@ const authSlice = createSlice({
         setError: (state, action) => {
             state.error = action.payload;
         },
+        logout: (state) => {
+            state.token = initialState.token
+            state.userInfo = initialState.userInfo
+            clearTokens()
+            clearUserInfo()
+        }
     },
     extraReducers: (builder) => {
         builder.addMatcher(authApi.endpoints.login.matchPending, (state) => {
@@ -46,7 +63,7 @@ const authSlice = createSlice({
             authApi.endpoints.login.matchRejected,
             (state, payload) => {
                 // const error = (action.payload?.data as IErrorPayload)?.error;
-console.log(payload)
+            console.log(payload)
                 let errorMessage: string | undefined;
 
                 // if (typeof error === "object" && error !== null) {
@@ -68,5 +85,5 @@ console.log(payload)
     },
 });
 
-export const { setError } = authSlice.actions;
+export const { setError, logout } = authSlice.actions;
 export default authSlice.reducer;

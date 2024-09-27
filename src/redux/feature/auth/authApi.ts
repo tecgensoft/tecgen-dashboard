@@ -1,4 +1,4 @@
-import { setTokens } from '../../../utils/localStorage'
+import { setTokens, setUserInfo } from '../../../utils/localStorage'
 import { api } from '../../api/apiSlice'
 
 export const authApi = api.injectEndpoints({
@@ -6,7 +6,7 @@ export const authApi = api.injectEndpoints({
     login: builder.mutation({
       query: (data) => {
         const loginObj = {
-          username: data.email,
+          username: data.user,
           password: data.password
         }
         return {
@@ -19,7 +19,10 @@ export const authApi = api.injectEndpoints({
         try {
           const { data } = await queryFulfilled
           if (data) {
-            setTokens(data.access, data.refresh)
+            const { email, username } = data
+            const { access, refresh } = data?.token
+            setTokens(access, refresh)
+            setUserInfo(email, username)
           }
         } catch (error) {
           console.error("Can't set data in cookie. failed:", error)

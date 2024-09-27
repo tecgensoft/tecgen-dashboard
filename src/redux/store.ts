@@ -10,7 +10,7 @@ import {
 import { CombinedState } from '@reduxjs/toolkit/query'
 
 import { api } from './api/apiSlice'
-import authReducer, { IInitialState } from './feature/auth/authSlice'
+import authReducer, { IInitialState, initialState } from './feature/auth/authSlice'
 import notificationReducer, {
   INotification,
 } from './feature/notification/notificationSlice'
@@ -18,12 +18,21 @@ import openSlice from './feature/open/openSlice'
 import stepperReducer from './feature/stepper/stepperSlice'
 import themeReducer, { ITheme } from './feature/theme/themeSlice'
 
-const initialState: IInitialState = {
-  loading: false,
-  error: null,
-  success: false,
-  message: '',
-}
+
+const token = localStorage.getItem('access')
+const userinfo = localStorage.getItem('userinfo') ?? {}
+// console.log(getUserData(token))
+
+const preloadedState = {
+  auth: {
+    ...initialState,
+    userinfo: {
+      ...initialState.userInfo,
+      ...userinfo, 
+    },
+    token: token
+  },
+};
 
 const store: EnhancedStore<
   {
@@ -63,9 +72,7 @@ const store: EnhancedStore<
     stepper: stepperReducer,
     open: openSlice,
   },
-  preloadedState: {
-    auth: initialState,
-  },
+  preloadedState: preloadedState,
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware().concat(api.middleware),
 })

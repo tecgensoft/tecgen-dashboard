@@ -21,11 +21,11 @@ import Toastify from '../../components/Toastify'
 import { useLoginMutation } from '../../redux/feature/auth/authApi'
 
 interface ILoginFormError {
-  email: string | undefined | null
+  user: string | undefined | null
   password: string | undefined | null
 }
 interface ILoginForm {
-  email: string
+  user: string
   password: string
 }
 const InputField = styled(TextField)({
@@ -56,19 +56,19 @@ export default function Login() {
   // const [isLoading, setLoading] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'))
-
+  // const { userInfo:user, token } = useAppSelector(state => state.auth)
 
   // login error state
   const [userInfoError, setUserInfoError] = useState<ILoginFormError>({
-    email: null,
+    user: null,
     password: null,
   })
   // login data state
   const [userInfo, setUserInfo] = useState<ILoginForm>({
-    email: '',
+    user: '',
     password: '',
   })
-
+// console.log(userInfo)
   // handle Change function to take login information
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUserInfo({ ...userInfo, [e.target.name]: e.target.value })
@@ -76,19 +76,19 @@ export default function Login() {
 
   // validate login form
   const validateForm = () => {
-    const { email, password } = userInfo
-    let emailError
+    const { user, password } = userInfo
+    let userError
     let passwordError
-    if(email === ''){
-      emailError = 'E-mail is required.'
-      // if (email !== '' && email) {
-      //   emailError = !/^[a-zA-Z0-9._:$!%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]+$/.test(
-      //     email,
+    if(user === ''){
+      userError = 'Username is required.'
+      // if (user !== '' && user) {
+      //   userError = !/^[a-zA-Z0-9._:$!%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]+$/.test(
+      //     user,
       //   )
       //     ? 'Invalid e-mail address'
       //     : null
       // } else {
-      //   emailError = 'E-mail is required.'
+      //   userError = 'E-mail is required.'
       // }
     }
     if (password !== '' && password) {
@@ -97,9 +97,9 @@ export default function Login() {
     } else {
       passwordError = 'Password is required.'
     }
-    setUserInfoError({ email: emailError, password: passwordError })
+    setUserInfoError({ user: userError, password: passwordError })
 
-    return !emailError && !passwordError
+    return !userError && !passwordError
   }
 
   // handle submit for login
@@ -171,14 +171,14 @@ export default function Login() {
                 margin="normal"
                 required
                 fullWidth
-                id="email"
-                label="Email Address"
-                name="email"
-                autoComplete="email"
+                id="user"
+                label="Username"
+                name="user"
+                autoComplete="user"
                 autoFocus
                 onChange={handleChange}
-                error={!!userInfoError.email}
-                helperText={userInfoError.email}
+                error={!!userInfoError.user}
+                helperText={userInfoError.user}
               />
               <InputField
                 margin="normal"

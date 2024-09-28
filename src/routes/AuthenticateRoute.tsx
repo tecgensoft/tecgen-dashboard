@@ -1,22 +1,13 @@
-import { Navigate, useLocation } from "react-router-dom";
-import { useAppSelector } from "../redux/hook";
-
+import { Navigate } from 'react-router-dom'
+import { useAppSelector } from '../redux/hook'
 
 const Authenticate = ({ children }: { children: any }) => {
-    const location = useLocation();
-    const { pathname, state } = location;
-    const {token, userInfo} = useAppSelector((state) => state.auth);
-    // console.log('ok', token, userInfo)
-    if (!token && !userInfo) {
-        console.log(!token)
-        return children;
-    }
+  const { token } = useAppSelector(state => state.auth)
+  if (token) {
+    return <Navigate to="/" replace />
+  }
 
-    if (token && userInfo) {
-        console.log(token)
-        return <Navigate to="/" state={{ ...state, path: pathname }} />;
-    }
-    return children;
-};
+  return children
+}
 
-export default Authenticate;
+export default Authenticate

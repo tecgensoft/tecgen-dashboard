@@ -103,7 +103,7 @@ function Layout() {
               alt="Logo"
               style={{
                 transition: 'width 0.3s ease-in-out',
-                maxHeight:"80px"
+                maxHeight:"40px"
               }}
             />
 
@@ -113,9 +113,10 @@ function Layout() {
               sx={{
                 position: 'absolute',
                 right: '0',
-                top: '100px',
+                top: '80px',
                 padding: '0px',
                 minWidth: 10,
+                zIndex:"99999"
               }}
               onClick={() => setOpen(!open)}
             >

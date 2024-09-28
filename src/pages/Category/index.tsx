@@ -5,20 +5,13 @@ import Table from '../../components/table/Table'
 import TableHeader from '../../components/table/TableHeader'
 import CategoryColumn from './_components/CategoryColumn'
 import CategoryCreateANDUpdate from './_components/CategoryCreateANDUpdate'
+import { ICategoryInfo, ICategoryInfoError } from './types/types'
 
 
-interface ICategoryInfo {
-  name: string
-  images: string[]
-  is_active: boolean
-  show_in_ecommerce: boolean
-}
 
 export default function Category() {
   // const { data } = useGetCategoryQuery(undefined)
-  const [errors, setErrors] = useState<{
-    [key: string]: string | null | undefined
-  }>({})
+  const [errors, setErrors] = useState<ICategoryInfoError>({})
   const [categoryInfo, setCategoryInfo] = useState<ICategoryInfo>({
     name: '',
     images: [],
@@ -79,6 +72,7 @@ export default function Category() {
           handleChange={handleChange}
           handleChecked={handleChecked}
           categoryInfo={categoryInfo}
+          setCategoryInfo={setCategoryInfo}
           errors={errors}
         />
       </ModalView>

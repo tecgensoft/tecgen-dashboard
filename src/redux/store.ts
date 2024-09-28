@@ -10,7 +10,7 @@ import {
 import { CombinedState } from '@reduxjs/toolkit/query'
 
 import { api } from './api/apiSlice'
-import authReducer, { IInitialState, initialState } from './feature/auth/authSlice'
+import authReducer, { IInitialState } from './feature/auth/authSlice'
 import notificationReducer, {
   INotification,
 } from './feature/notification/notificationSlice'
@@ -19,18 +19,18 @@ import stepperReducer from './feature/stepper/stepperSlice'
 import themeReducer, { ITheme } from './feature/theme/themeSlice'
 
 
-const token = localStorage.getItem('access')
-const userinfo = localStorage.getItem('userinfo') ?? {}
-// console.log(getUserData(token))
+const token = localStorage.getItem('access');
+const userinfo = JSON.parse(localStorage.getItem('userinfo') || '{}');
 
-const preloadedState = {
-  auth: {
-    ...initialState,
-    userinfo: {
-      ...initialState.userInfo,
-      ...userinfo, 
-    },
-    token: token
+const preloadedAuthState: IInitialState = {
+  loading: false,
+  error: null,
+  message: null,
+  success: false,
+  token: token || null,
+  userInfo: {
+    email: userinfo.email || null,
+    username: userinfo.username || null,
   },
 };
 
@@ -72,9 +72,11 @@ const store: EnhancedStore<
     stepper: stepperReducer,
     open: openSlice,
   },
-  preloadedState: preloadedState,
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware().concat(api.middleware),
+    preloadedState:{
+      auth: preloadedAuthState
+    }
 })
 
 export type RootState = ReturnType<typeof store.getState>

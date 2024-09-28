@@ -53,17 +53,20 @@ const authSlice = createSlice({
         });
         builder.addMatcher(
             authApi.endpoints.login.matchFulfilled,
-            (state) => {
+            (state, action) => {
+                console.log(action.payload)
+                const { token } = action.payload
                 state.loading = false;
                 state.error = null;
                 state.success = true;
+                state.token = token?.access
             }
         );
         builder.addMatcher(
             authApi.endpoints.login.matchRejected,
-            (state, payload) => {
+            (state) => {
                 // const error = (action.payload?.data as IErrorPayload)?.error;
-            console.log(payload)
+
                 let errorMessage: string | undefined;
 
                 // if (typeof error === "object" && error !== null) {

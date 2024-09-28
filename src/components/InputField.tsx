@@ -11,7 +11,7 @@ interface StyledInputProps {
   value?: string
   disable?: boolean
   error?: boolean
-  helperText?: string
+  helperText?: string | null | undefined
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
   required?: boolean
   inputLabel?: string

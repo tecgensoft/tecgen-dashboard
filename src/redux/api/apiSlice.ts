@@ -9,6 +9,7 @@ export const api = createApi({
         prepareHeaders: async (headers, {endpoint}) => {
             if(endpoint === 'login') return headers
             const token = getToken('access')
+            // console.log(isTokenExpired(token))
             // const { access } = getTokens();
             // let token = access
             // if (token && isTokenExpired(token)) {

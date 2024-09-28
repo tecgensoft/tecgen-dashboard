@@ -4,15 +4,27 @@ import ImageField from '../../../components/ImageField'
 import InputField from '../../../components/InputField'
 import SwitchField from '../../../components/modals/Switch'
 import { setOpen } from '../../../redux/feature/open/openSlice'
+import { ICategoryInfo, ICategoryInfoError } from '../types/types'
+
+interface CategoryCreateAndUpdateInterface {
+  handleSubmit: (e:Event) => void;
+  handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleChecked: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  categoryInfo: ICategoryInfo;
+  setCategoryInfo?: React.Dispatch<React.SetStateAction<ICategoryInfo>>;
+  errors: ICategoryInfoError;
+  buttonValue?: string;
+}
 
 export default function CategoryCreateANDUpdate({
   handleSubmit,
   handleChange,
   handleChecked,
   categoryInfo,
+  // setCategoryInfo,
   errors,
   buttonValue = 'Create'
-}: any) {
+} : CategoryCreateAndUpdateInterface) {
   const dispatch = useDispatch()
   console.log(errors)
   return (
@@ -23,7 +35,7 @@ export default function CategoryCreateANDUpdate({
         flexDirection: 'column',
         gap: '8px',
       }}
-      onSubmit={handleSubmit}
+      onSubmit={()=> handleSubmit}
     >
       <InputField
         name="name"
@@ -56,8 +68,8 @@ export default function CategoryCreateANDUpdate({
           value={categoryInfo.show_in_ecommerce}
         />
       </Box>
-      <ImageField label="Upload Icon" />
-      <ImageField label="Upload Logo" />
+      <ImageField label="Upload Icon"  />
+      <ImageField label="Upload Logo"  />
       
       <Box
           pl={4}

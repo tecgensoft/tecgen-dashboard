@@ -1,10 +1,12 @@
+/* eslint-disable @typescript-eslint/ban-types */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   EnhancedStore,
   StoreEnhancer,
   ThunkDispatch,
   Tuple,
   UnknownAction,
-  configureStore,
+  configureStore
 } from '@reduxjs/toolkit'
 
 import { CombinedState } from '@reduxjs/toolkit/query'
@@ -20,6 +22,7 @@ import themeReducer, { ITheme } from './feature/theme/themeSlice'
 
 
 const token = localStorage.getItem('access');
+const refresh = localStorage.getItem('refresh');
 const userinfo = JSON.parse(localStorage.getItem('userinfo') || '{}');
 
 const preloadedAuthState: IInitialState = {
@@ -28,11 +31,13 @@ const preloadedAuthState: IInitialState = {
   message: null,
   success: false,
   token: token || null,
+  refresh: refresh || null,
   userInfo: {
     email: userinfo.email || null,
     username: userinfo.username || null,
   },
 };
+
 
 const store: EnhancedStore<
   {

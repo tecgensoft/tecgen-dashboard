@@ -3,14 +3,14 @@ import { DataGrid } from '@mui/x-data-grid'
 import { useState } from 'react'
 import CustomNoRowsOverlay from '../NoData'
 
-export default function Table({columns}: {columns: any[]}) {
+export default function Table({columns, rows = []}: {columns: any[]; rows: any[]}) {
   const theme = useTheme()
   const [paginationModel, setPaginationModel] = useState({
     pageSize: 10,
     page: 0,
   })
 
-  const rows: any[] = []
+  // const rows: any[] = []
   return (
     <Box sx={{marginTop:"24px"}}>
       <DataGrid

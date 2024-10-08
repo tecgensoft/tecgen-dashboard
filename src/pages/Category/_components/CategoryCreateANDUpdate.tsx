@@ -26,7 +26,7 @@ export default function CategoryCreateANDUpdate({
   buttonValue = 'Create'
 } : CategoryCreateAndUpdateInterface) {
   const dispatch = useDispatch()
-  console.log(errors)
+
   return (
     <Box
       component="form"

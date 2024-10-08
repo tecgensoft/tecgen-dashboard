@@ -14,6 +14,7 @@ export interface IInitialState {
     message: null | string;
     success: boolean;
     token: string | null,
+    refresh: string | null,
     userInfo: {
         email: string | null;
         username: string | null
@@ -26,12 +27,14 @@ export const initialState: IInitialState = {
     message: null,
     success: false,
     token: "",
+    refresh: "",
     userInfo: {
         email: '',
         username: ''
     }
+    
 };
-const authSlice = createSlice({
+export const authSlice = createSlice({
     name: "auth",
     initialState,
     reducers: {       
@@ -40,9 +43,14 @@ const authSlice = createSlice({
         },
         logout: (state) => {
             state.token = initialState.token
+            state.token = initialState.refresh
             state.userInfo = initialState.userInfo
             clearTokens()
             clearUserInfo()
+        },
+        setToken: (state, action) => {
+            const { access } = action.payload;
+            state.token = access
         }
     },
     extraReducers: (builder) => {
@@ -62,31 +70,9 @@ const authSlice = createSlice({
                 state.token = token?.access
             }
         );
-        builder.addMatcher(
-            authApi.endpoints.login.matchRejected,
-            (state) => {
-                // const error = (action.payload?.data as IErrorPayload)?.error;
-
-                let errorMessage: string | undefined;
-
-                // if (typeof error === "object" && error !== null) {
-                //     // Check if error has a 'code' and 'message'
-                //     if (error.code === "invalidCredentials") {
-                //         errorMessage = "Invalid E-mail/Password.";
-                //     } else {
-                //         errorMessage = error.message;
-                //     }
-                // } else {
-                //     // Handle case where error is not an object
-                //     errorMessage = "An unknown error occurred";
-                // }
-                state.loading = false;
-                state.error = errorMessage;
-                state.success = false;
-            }
-        );
     },
 });
 
-export const { setError, logout } = authSlice.actions;
+export const { setError, logout, setToken } = authSlice.actions;
+
 export default authSlice.reducer;

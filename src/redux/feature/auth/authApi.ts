@@ -20,7 +20,7 @@ export const authApi = api.injectEndpoints({
           const { data } = await queryFulfilled
           if (data) {
             const { email, username } = data
-            const { access, refresh } = data?.token
+            const { access, refresh } = data.token 
             setTokens(access, refresh)
             setUserInfo(email, username)
           }
@@ -29,6 +29,17 @@ export const authApi = api.injectEndpoints({
         }
       },
     }),
+    refresh: builder.mutation({
+      query: ({refresh})=> {
+        return {
+          url:"/user/refresh-token/",
+          method: 'POST',
+          body:{
+            refresh: refresh
+          }
+        }
+      }
+    })
   }),
 })
 

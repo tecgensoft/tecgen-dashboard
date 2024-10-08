@@ -3,6 +3,7 @@ import { useState } from 'react'
 import ModalView from '../../components/modals/Modal'
 import Table from '../../components/table/Table'
 import TableHeader from '../../components/table/TableHeader'
+import { useGetCategoryQuery } from '../../redux/feature/productManagement/productManagementApi'
 import CategoryColumn from './_components/CategoryColumn'
 import CategoryCreateANDUpdate from './_components/CategoryCreateANDUpdate'
 import { ICategoryInfo, ICategoryInfoError } from './types/types'
@@ -10,7 +11,7 @@ import { ICategoryInfo, ICategoryInfoError } from './types/types'
 
 
 export default function Category() {
-  // const { data } = useGetCategoryQuery(undefined)
+  const { data: categoryData } = useGetCategoryQuery(undefined)
   const [errors, setErrors] = useState<ICategoryInfoError>({})
   const [categoryInfo, setCategoryInfo] = useState<ICategoryInfo>({
     name: '',
@@ -18,7 +19,7 @@ export default function Category() {
     is_active: false,
     show_in_ecommerce: false,
   })
-
+// console.log(data)
   // handle change function
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCategoryInfo({ ...categoryInfo, [e.target.name]: e.target.value })
@@ -33,7 +34,7 @@ export default function Category() {
   }
 
   const validateForm = () => {
-    let errors: {
+    const errors: {
       name: string | null | undefined
     } = {
       name: undefined,
@@ -53,9 +54,11 @@ export default function Category() {
     e.preventDefault()
     console.log('ok')
     if (validateForm()) {
+      //
     }
   }
-
+  const getCategoryData = categoryData?.results
+console.log(categoryInfo)
   return (
     <Box
       sx={{
@@ -65,7 +68,7 @@ export default function Category() {
       }}
     >
       <TableHeader tableTitle="Category List" />
-      <Table columns={CategoryColumn()} />
+      <Table columns={CategoryColumn()} rows={getCategoryData} />
       <ModalView headerTitle="Create category">
         <CategoryCreateANDUpdate
           handleSubmit={handleSubmit}

@@ -6,8 +6,6 @@ import { CSSObject, Theme, styled, useTheme } from '@mui/material/styles'
 import { useState } from 'react'
 import { Outlet } from 'react-router-dom'
 import drawer_close_mb from '../assets/drawerClose_mb.png'
-import miniLogo from "../assets/lodingIcon.png"
-import logo from '../assets/logo.png'
 import Header from './_components/Header'
 import Sidebar from './_components/Sidebar'
 const drawerWidth = 273
@@ -66,9 +64,9 @@ function Layout() {
   //   }
   // }
 
-  const LogoImage = styled('img')({
-    transition: 'all 0.3s ease-in-out',
-  })
+  // const LogoImage = styled('img')({
+  //   transition: 'all 0.3s ease-in-out',
+  // })
 
   return (
     <Box sx={{ display: 'flex', width: '100%', overflowX: 'hidden' }}>
@@ -85,7 +83,7 @@ function Layout() {
                 theme.palette.mode === 'dark' ? '#202020' : 'white',
             }}
           >
-            <LogoImage
+            {/* <LogoImage
               src={
                 !open
                   ? miniLogo
@@ -105,7 +103,7 @@ function Layout() {
                 transition: 'width 0.3s ease-in-out',
                 maxHeight:"40px"
               }}
-            />
+            /> */}
 
             <Button
               color="primary"

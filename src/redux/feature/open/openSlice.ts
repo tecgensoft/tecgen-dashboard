@@ -1,11 +1,13 @@
 
-import { PayloadAction, createSlice } from '@reduxjs/toolkit'
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
 export interface IOpen {
-  open: boolean
+  open: boolean;
+  type: string;
 }
 const initialState: IOpen = {
-  open: false
+  open: false,
+  type: ''
 }
 
 const openSlice = createSlice({
@@ -15,8 +17,11 @@ const openSlice = createSlice({
     setOpen: (state, action: PayloadAction<boolean>) => {
       state.open = action.payload
     },
+    setType: (state, action: PayloadAction<string>) => {
+      state.type = action.payload
+    },
   },
 })
 
-export const { setOpen } = openSlice.actions
+export const { setOpen, setType } = openSlice.actions
 export default openSlice.reducer

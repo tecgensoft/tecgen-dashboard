@@ -1,8 +1,9 @@
 import AddIcon from '@mui/icons-material/Add'
 import { Button, Grid, Typography, useMediaQuery, useTheme } from '@mui/material'
 import { useDispatch } from 'react-redux'
-import { setOpen } from '../../redux/feature/open/openSlice'
+import { setOpen, setType } from '../../redux/feature/open/openSlice'
 import { useAppSelector } from '../../redux/hook'
+import { CREATE } from '../../constant/constant'
 
 export default function TableHeader({ tableTitle }: { tableTitle: string }) {
   const theme = useTheme()
@@ -38,7 +39,10 @@ export default function TableHeader({ tableTitle }: { tableTitle: string }) {
             height: '38px',
             textTransform: 'capitalize',
           }}
-          onClick={() => dispatch(setOpen(!open))}
+          onClick={() => {
+            dispatch(setType(CREATE))
+            dispatch(setOpen(!open))
+          }}
         >
           Create
         </Button>

@@ -7,13 +7,13 @@ import { setOpen } from '../../../redux/feature/open/openSlice'
 import { ICategoryInfo, ICategoryInfoError } from '../types/types'
 
 interface CategoryCreateAndUpdateInterface {
-  handleSubmit: (e:Event) => void;
-  handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  handleChecked: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  categoryInfo: ICategoryInfo;
-  setCategoryInfo?: React.Dispatch<React.SetStateAction<ICategoryInfo>>;
-  errors: ICategoryInfoError;
-  buttonValue?: string;
+  handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+  handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+  handleChecked: (e: React.ChangeEvent<HTMLInputElement>) => void
+  categoryInfo: ICategoryInfo
+  setCategoryInfo: React.Dispatch<React.SetStateAction<ICategoryInfo>>
+  errors: ICategoryInfoError
+  buttonValue?: string
 }
 
 export default function CategoryCreateANDUpdate({
@@ -21,11 +21,12 @@ export default function CategoryCreateANDUpdate({
   handleChange,
   handleChecked,
   categoryInfo,
-  // setCategoryInfo,
+  setCategoryInfo,
   errors,
-  buttonValue = 'Create'
-} : CategoryCreateAndUpdateInterface) {
+  buttonValue = 'Create',
+}: CategoryCreateAndUpdateInterface) {
   const dispatch = useDispatch()
+  // console.log(errors)
 
   return (
     <Box
@@ -35,7 +36,7 @@ export default function CategoryCreateANDUpdate({
         flexDirection: 'column',
         gap: '8px',
       }}
-      onSubmit={()=> handleSubmit}
+      onSubmit={handleSubmit}
     >
       <InputField
         name="name"
@@ -45,6 +46,7 @@ export default function CategoryCreateANDUpdate({
         onChange={handleChange}
         error={!!errors.name}
         helperText={errors.name}
+        value={categoryInfo.name}
       />
       <Box
         sx={{
@@ -68,30 +70,44 @@ export default function CategoryCreateANDUpdate({
           value={categoryInfo.show_in_ecommerce}
         />
       </Box>
-      <ImageField label="Upload Icon"  />
-      <ImageField label="Upload Logo"  />
-      
+      <ImageField
+        label="Upload Icon"
+        setCategoryInfo={setCategoryInfo}
+        tagName="icon_images"
+        initialImage={categoryInfo.icon_images}
+        required
+      />
+      <ImageField
+        label="Upload Logo"
+        setCategoryInfo={setCategoryInfo}
+        tagName="logo_images"
+        isMultiple={true}
+        initialImage={categoryInfo.logo_images}
+      />
+      <Divider/>
       <Box
-          pl={4}
-          pr={4}
-          pb={4}
-          sx={{
-            display: 'flex',
-            justifyContent: 'flex-end',
-            gap: '8px',
-          }}
+        pl={4}
+        pr={4}
+        pb={4}
+        sx={{
+          display: 'flex',
+          justifyContent: 'flex-end',
+          gap: '8px',
+        }}
+      >
+        <Button
+          variant="contained"
+          color="secondary"
+          onClick={() => dispatch(setOpen(!open))}
         >
-          <Button
-            variant="contained"
-            color="secondary"
-            onClick={() => dispatch(setOpen(!open))}
-          >
-            Close
-          </Button>
-          {<Button type="submit" variant="contained" color="primary">
+          Close
+        </Button>
+        {
+          <Button type="submit" variant="contained" color="primary">
             {buttonValue}
-          </Button>}
-        </Box>
+          </Button>
+        }
+      </Box>
     </Box>
   )
 }

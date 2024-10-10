@@ -13,7 +13,7 @@ export const productManagementApi = api.injectEndpoints({
           },
         }
       },
-      providesTags: ['AddCategory'],
+      providesTags: ['AddCategory', 'DeleteCategory'],
     }),
     addCategory: builder.mutation({
       query: data => {
@@ -22,13 +22,25 @@ export const productManagementApi = api.injectEndpoints({
           method: 'POST',
           body: data,
           headers: {
-            'content-type': 'multipart/form-data',
+            'content-type': 'application/json',
           },
         }
       },
       invalidatesTags: ['AddCategory'],
     }),
+    deleteCategory: builder.mutation({
+      query: ({id}) => {
+        return {
+          url: `/catalog/category-retrieve-update-destroy/${id}`,
+          method: 'DELETE',
+          headers: {
+            'content-type': 'application/json',
+          },
+        }
+      },
+      invalidatesTags: ['DeleteCategory'],
+    }),
   }),
 })
 
-export const { useGetCategoryQuery, useAddCategoryMutation } = productManagementApi
+export const { useGetCategoryQuery, useAddCategoryMutation, useDeleteCategoryMutation } = productManagementApi

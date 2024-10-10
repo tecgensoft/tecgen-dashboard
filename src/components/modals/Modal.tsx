@@ -11,7 +11,7 @@ import closeIcon from '../../assets/closeIcon.png'
 import { setOpen } from '../../redux/feature/open/openSlice'
 import { useAppSelector } from '../../redux/hook'
 const style = {
-  position: 'absolute' as 'absolute',
+  position: 'absolute',
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
@@ -86,7 +86,7 @@ export default function ModalView({
         </Box>
         <Divider />
         <Box sx={{ py: '18px', px: '16px' }}>{children}</Box>
-        <Divider sx={{ mb: 4 }} />
+        {isShowClose && <Box><Divider sx={{ mb: 4 }} />
         <Box
           pl={4}
           pr={4}
@@ -97,17 +97,14 @@ export default function ModalView({
             gap: '8px',
           }}
         >
-          {isShowClose && <Button
+          <Button
             variant="contained"
             color="secondary"
             onClick={() => dispatch(setOpen(!open))}
           >
             Close
-          </Button>}
-          {/* {<Button type="submit" variant="contained" color="primary">
-            {buttonValue}
-          </Button>} */}
-        </Box>
+          </Button>
+        </Box></Box>}
       </Box>
     </Modal>
   )

@@ -1,13 +1,61 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import CheckIcon from '@mui/icons-material/Check';
-import CloseIcon from '@mui/icons-material/Close';
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
-import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
-import { Box, IconButton, Tooltip } from '@mui/material';
-import { GridColDef } from '@mui/x-data-grid';
-export default function CategoryColumn() {
+import DeleteIcon from '@mui/icons-material/Delete'
+import EditIcon from '@mui/icons-material/Edit'
+import { Box, IconButton, Tooltip, Typography } from '@mui/material'
+import { GridColDef } from '@mui/x-data-grid'
+import { useState } from 'react'
+import { useDispatch } from 'react-redux'
+import ConfirmDeleteModal from '../../../components/modals/ConfirmDeleteModal'
+import { SUCCESS } from '../../../constant/constant'
+import { setNotification } from '../../../redux/feature/notification/notificationSlice'
+import { useDeleteCategoryMutation } from '../../../redux/feature/productManagement/productManagementApi'
+
+export default function CategoryColumn(handleEdit: { (editValue: any): void; (arg0: any): void }) {
+  const [deleteCategory] = useDeleteCategoryMutation()
+  const [deleteModalOpen, setDeleteModalOpen] = useState<boolean>(false)
+  const dispatch = useDispatch()
+  
+
+  const handleDelete = async (deleteValue: { id: any }) => {
+    if(deleteValue){
+      try {
+        await deleteCategory({id: deleteValue}).then((res) => {
+          setDeleteModalOpen(false)
+          if(res.data){
+            dispatch(
+              setNotification({
+                open: true,
+                message: 'Category Deleted Successfully!',
+                type: SUCCESS,
+              }),
+            )
+          } else if(res.error){
+            console.log(res.error)
+            dispatch(
+              setNotification({
+                open: true,
+                message: 'Category not deleted. Something went wrong!',
+                type: SUCCESS,
+              }),
+            )
+          }
+          
+        })
+      } catch (error) {
+        console.log(error)
+        setDeleteModalOpen(false)
+        dispatch(
+          setNotification({
+            open: true,
+            message: 'Category not deleted. Something went wrong!',
+            type: SUCCESS,
+          }),
+        )
+      }
+    }
+  }
+
   const columns: GridColDef[] = [
     {
       field: 'icon',
@@ -15,13 +63,16 @@ export default function CategoryColumn() {
       sortable: false,
       disableColumnMenu: true,
       minWidth: 80,
-      flex:0.2,
-      renderCell: (value) => {
-        return <Box sx={{display:"flex", py:"4px"}}>
-          <img src={value.value} alt="Icon" height={"40px"} />
-        </Box>
-      }
-
+      flex: 0.2,
+      renderCell: value => {
+        return (
+          <Box sx={{ display: 'flex', py: '4px' }}>
+            {value.value.length > 0 && (
+              <img src={value.value} alt="Icon" height={'40px'} />
+            )}
+          </Box>
+        )
+      },
     },
     {
       field: 'logo',
@@ -29,12 +80,16 @@ export default function CategoryColumn() {
       sortable: false,
       disableColumnMenu: true,
       minWidth: 80,
-      flex:0.2,
-      renderCell: (value) => {
-        return <Box sx={{display:"flex", py:"4px"}}>
-          {value.value !== null && <img src={value.value} alt="Icon" height={"40px"} />}          
-        </Box>
-      }
+      flex: 0.2,
+      renderCell: value => {
+        return (
+          <Box sx={{ display: 'flex', py: '4px' }}>
+            {value.value.length > 0 && (
+              <img src={value.value} alt="Icon" height={'40px'} />
+            )}
+          </Box>
+        )
+      },
     },
     {
       field: 'name',
@@ -42,7 +97,7 @@ export default function CategoryColumn() {
       sortable: false,
       disableColumnMenu: true,
       minWidth: 300,
-      flex:1,
+      flex: 1,
     },
     {
       field: 'show_in_ecommerce',
@@ -50,20 +105,48 @@ export default function CategoryColumn() {
       minWidth: 180,
       sortable: false,
       disableColumnMenu: true,
-      renderCell: (value: any) => <Box sx={{display:"flex", alignItems:"center", justifyContent: 'center',width:"100%", height:"100%"}}>
-        {value.value ? <CheckIcon sx={{color: "rgb(2, 191, 108)"}}/> : <CloseIcon sx={{color: "rgb(238, 72, 92)"}}/> }
-      </Box>
+      renderCell: (value: any) => (
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            width: '100%',
+            height: '100%',
+          }}
+        >
+          {value.value ? (
+            <Typography sx={{ color: 'rgb(2, 191, 108)' }}>Yes</Typography>
+          ) : (
+            <Typography sx={{ color: 'rgb(238, 72, 92)' }}>No</Typography>
+          )}
+        </Box>
+      ),
     },
     {
       field: 'is_active',
       headerName: 'Is Active',
-      flex:0.2,
+      flex: 0.2,
       minWidth: 70,
       sortable: false,
       disableColumnMenu: true,
-      renderCell: (value: any) => <Box sx={{display:"flex", alignItems:"center", justifyContent: 'center',width:"100%", height:"100%"}}>
-        {value.value ? <CheckIcon sx={{color: "rgb(2, 191, 108)"}}/> : <CloseIcon sx={{color: "rgb(238, 72, 92)"}}/> }
-      </Box>
+      renderCell: (value: any) => (
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            width: '100%',
+            height: '100%',
+          }}
+        >
+          {value.value ? (
+            <Typography sx={{ color: 'rgb(2, 191, 108)' }}>Yes</Typography>
+          ) : (
+            <Typography sx={{ color: 'rgb(238, 72, 92)' }}>No</Typography>
+          )}
+        </Box>
+      ),
     },
     {
       field: 'created_by',
@@ -71,7 +154,8 @@ export default function CategoryColumn() {
       sortable: false,
       disableColumnMenu: true,
       minWidth: 150,
-      flex:0.5
+      flex: 0.5,
+      valueGetter: (value: any) => value?.username,
     },
     {
       field: 'ordering',
@@ -86,32 +170,48 @@ export default function CategoryColumn() {
       sortable: false,
       minWidth: 150,
       disableColumnMenu: true,
-      renderCell: () => {
+      flex: 0.2,
+      renderCell: params => {
+        // console.log(params)
+        const row = params.row
         return (
-          <>
-            <Tooltip title="Quick View">
-              <IconButton aria-label="view">
-                <RemoveRedEyeIcon />
-              </IconButton>
-            </Tooltip>
-            {(
-              <Tooltip
-                title={``}
+          <Box>
+            <Tooltip title={`Edit`}>
+              <IconButton
+                color="primary"
+                aria-label="edit"
+                onClick={() => handleEdit(row)}
+                sx={{
+                  borderRadius: '8px',
+                  padding: '8px',
+                  background: '#32976a0a',
+                }}
               >
-                <IconButton
-                  aria-label="edit"
-                  sx={{ borderRadius: '8px', padding: '8px' }}
-                >
-                  <EditIcon />
-                </IconButton>
-              </Tooltip>
-            )}
-            <Tooltip title="Delete">
-              <IconButton aria-label="delete">
-                <DeleteIcon sx={{color:"#ea244e", }}  />
+                <EditIcon />
               </IconButton>
             </Tooltip>
-          </>
+
+            <Tooltip title="Delete">
+              <IconButton
+                sx={{
+                  borderRadius: '8px',
+                  padding: '8px',
+                  background: '#0000000a',
+                  mx: '4px',
+                }}
+                onClick={() => setDeleteModalOpen(!deleteModalOpen)}
+                aria-label="delete"
+              >
+                <DeleteIcon color="secondary" />
+              </IconButton>
+            </Tooltip>
+            <ConfirmDeleteModal
+              title={'Are you sure you want to delete this Category?'}
+              open={deleteModalOpen}
+              onClose={() => setDeleteModalOpen(false)}
+              onConfirm={() => handleDelete(row?.id)}
+            ></ConfirmDeleteModal>
+          </Box>
         )
       },
     },

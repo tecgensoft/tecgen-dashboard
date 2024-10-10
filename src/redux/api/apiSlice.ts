@@ -27,6 +27,6 @@ export const api = createApi({
         return headers;
     },
 }),
-  tagTypes: ['AddCategory'],
+  tagTypes: ['AddCategory', 'DeleteCategory'],
   endpoints: () => ({}),
 })

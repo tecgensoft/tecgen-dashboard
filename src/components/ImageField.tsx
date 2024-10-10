@@ -1,7 +1,8 @@
 import { CloseOutlined } from '@mui/icons-material'
 import ImageIcon from '@mui/icons-material/Image'
 import { Box, Button, CircularProgress, Typography } from '@mui/material'
-import { useEffect, useState } from 'react'
+import { SetStateAction, useEffect, useState } from 'react'
+import { ICategoryInfo } from '../pages/Category/types/types'
 import {
     useImgDeleteMutation,
     useImgUploadMutation,
@@ -9,19 +10,34 @@ import {
 interface IImageField {
     label?: string
     required?: boolean
+    tagName: string;
+    setCategoryInfo: React.Dispatch<SetStateAction<ICategoryInfo>>;
+    isMultiple?: boolean;
+    initialImage?: string[]
+    errorMsg?: string | null
 }
 export default function ImageField({
     label,
-    required,
+    required = false,
+    setCategoryInfo,
+    tagName,
+    isMultiple,
+    initialImage= [],
+    errorMsg
 }: IImageField) {
-    const [error, setError] = useState<string | null>(null)
-    const [previews, setPreviews] = useState<string[]>([])
+    const [error, setError] = useState<string | null>()
+    const [previews, setPreviews] = useState<string[]>(initialImage?.length > 0 ? initialImage : [])
     const [isTouched, setIsTouched] = useState<boolean>(false)
     const [loadingImages, setLoadingImages] = useState<{ [key: string]: boolean }>({});
     const maxFileSize = 3 * 1024 * 1024
     const allowedTypes = ['image/jpeg', 'image/png']
     const [imgUpload, { isLoading }] = useImgUploadMutation()
     const [imgDelete] = useImgDeleteMutation()
+
+
+    useEffect(() => {
+        setCategoryInfo((prev) => ({ ...prev, [tagName]: previews }))
+    }, [previews, setCategoryInfo, tagName])
 
     const handleFileChange = async (
         event: React.ChangeEvent<HTMLInputElement>,
@@ -31,8 +47,8 @@ export default function ImageField({
 
         if (selectedFiles) {
             const newFiles: File[] = Array.from(selectedFiles)
-            let validFiles: File[] = []
-            let errorMessages: string[] = []
+            const validFiles: File[] = []
+            const errorMessages: string[] = []
 
             newFiles.forEach(file => {
                 if (!allowedTypes.includes(file.type)) {
@@ -58,16 +74,40 @@ export default function ImageField({
             }
 
             setError(null)
-
-            for (const file of validFiles) {
+            if (isMultiple) {
+                for (const file of validFiles) {
+                    const formData = new FormData()
+                    formData.append('image', file)
+                    const res = await imgUpload(formData)
+                    const img_url = res?.data?.image_url
+                    if (img_url) {
+                        setPreviews(prev => [...prev, img_url])
+                    }
+                }
+            } else {
+                if (previews.length > 0) {
+                    console.log('ok')
+                    // if EDIT we do not delete image. remove from array not call the function
+                    previews.map(async (imgLink) => {
+                        await imgDelete({
+                            image_url: imgLink,
+                        }).then(res => {
+                            if (res.data) {
+                                const updatedPreviews = previews.filter((link) => link !== link)
+                                setPreviews(updatedPreviews)
+                            }
+                        })
+                    })
+                }
                 const formData = new FormData()
-                formData.append('image', file)
+                formData.append('image', validFiles[0])
                 const res = await imgUpload(formData)
                 const img_url = res?.data?.image_url
                 if (img_url) {
-                    setPreviews(prev => [...prev, img_url])
+                    setPreviews([img_url])
                 }
             }
+
         }
     }
 
@@ -82,7 +122,7 @@ export default function ImageField({
                     setPreviews(updatedPreviews)
                 }
             }).finally(() => {
-                setLoadingImages(prev => ({ ...prev, [imageUrl]: false })); 
+                setLoadingImages(prev => ({ ...prev, [imageUrl]: false }));
             });
         }
     }
@@ -96,7 +136,7 @@ export default function ImageField({
     useEffect(() => {
         const timer = setTimeout(() => {
             setError('')
-        },3000);    
+        }, 3000);
         return () => clearTimeout(timer);
     }, [error])
     return (
@@ -152,7 +192,7 @@ export default function ImageField({
                         type="file"
                         accept="image/*"
                         hidden
-                        multiple
+                        multiple={isMultiple}
                         onChange={handleFileChange}
                     />
                 </Button>
@@ -203,15 +243,15 @@ export default function ImageField({
                                     top: 0,
                                     right: 0,
                                     minWidth: '18px',
-                                    minHeight:"18px",
+                                    minHeight: "18px",
                                     padding: '0',
                                     lineHeight: '1',
-                                    background:"white",
+                                    background: "white",
                                     'box-shadow': '0px 0px 3px 0px #32976a',
-                                    display:"flex",
-                                    alignItems:"center",
-                                    justifyContent:"center",
-                                    borderRadius:"50%"
+                                    display: "flex",
+                                    alignItems: "center",
+                                    justifyContent: "center",
+                                    borderRadius: "50%"
                                 }}
                             >
                                 <CloseOutlined sx={{ fontSize: '16px', fontWeight: 'bold' }} />
@@ -220,9 +260,9 @@ export default function ImageField({
                     ))}
                 </Box>
             </Box>
-            {error && isTouched && (
+            {errorMsg || error && isTouched && (
                 <Typography color="error" sx={{ mt: 1, fontSize: '12px' }}>
-                    {error}
+                    {errorMsg || error }
                 </Typography>
             )}
         </Box>

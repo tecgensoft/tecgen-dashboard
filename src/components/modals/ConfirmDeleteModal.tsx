@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Box, Button, Modal, Typography } from '@mui/material'
+import { Box, Button, CircularProgress, Modal, Typography } from '@mui/material'
 
-const ConfirmDeleteModal = ({ open, onClose, onConfirm, title }: any) => {
+const ConfirmDeleteModal = ({ open, onClose, onConfirm, title, isLoading }: any) => {
   return (
     <Modal
       open={open}
@@ -50,7 +50,7 @@ const ConfirmDeleteModal = ({ open, onClose, onConfirm, title }: any) => {
             sx={{ padding: '8px 32px', margin: '0 2px' }}
             onClick={onConfirm}
           >
-            Confirm
+            {isLoading ? <CircularProgress size={'16px'} sx={{ color: 'white' }} /> : 'Confirm' }
           </Button>
         </Box>
       </Box>

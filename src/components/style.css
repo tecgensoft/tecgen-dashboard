@@ -22,14 +22,6 @@ input[type='number'] {
   -moz-appearance: textfield;
 }
 
-/* .css-tyepu6-MuiAutocomplete-root
-  .MuiAutocomplete-inputRoot
-  .MuiAutocomplete-input {
-  width: 100% !important;
-} */
-/* .css-1nrlq1o-MuiFormControl-root {
-  width: 100% !important;
-} */
 .loader {
   /* background: transparent; */
   border-radius: 50%;

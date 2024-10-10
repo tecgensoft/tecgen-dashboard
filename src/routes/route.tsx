@@ -8,7 +8,7 @@ import Dashboard from '../pages/dashboard'
 import Login from '../pages/login'
 import NotFound from '../pages/notFound'
 
-import BookingList from '../pages/booking/bookingList'
+
 
 import Category from '../pages/Category'
 import Store from '../pages/Store'
@@ -46,7 +46,7 @@ const routes = createBrowserRouter([
             children: [
               {
                 index: true,
-                element: <BookingList />,
+                element: <Category/>,
               },
             ],
           },
@@ -59,7 +59,7 @@ const routes = createBrowserRouter([
               },
               {
                 path: 'manage-subcategory',
-                element: <BookingList />,
+                element: <Category />,
               },
             ],
           },

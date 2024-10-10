@@ -3,17 +3,17 @@ import { api } from '../../api/apiSlice'
 export const productManagementApi = api.injectEndpoints({
   endpoints: builder => ({
     getCategory: builder.query({
-      query: data => {
+      query: ({page}) => {
         return {
-          url: '/catalog/category/',
+          url: `/catalog/category/?page=${page}`,
           method: 'GET',
-          body: data,
+          // body: data,
           headers: {
             'content-type': 'application/json',
           },
         }
       },
-      providesTags: ['AddCategory', 'DeleteCategory'],
+      providesTags: ['AddCategory', 'DeleteCategory', 'UpdateCategory'],
     }),
     addCategory: builder.mutation({
       query: data => {
@@ -28,8 +28,21 @@ export const productManagementApi = api.injectEndpoints({
       },
       invalidatesTags: ['AddCategory'],
     }),
+    updateCategory: builder.mutation({
+      query: ({ id, data }) => {
+        return {
+          url: `/catalog/category-retrieve-update-destroy/${id}`,
+          method: 'PUT',
+          body: JSON.stringify(data),
+          headers: {
+            'content-type': 'application/json',
+          },
+        }
+      },
+      invalidatesTags: ['UpdateCategory'],
+    }),
     deleteCategory: builder.mutation({
-      query: ({id}) => {
+      query: ({ id }) => {
         return {
           url: `/catalog/category-retrieve-update-destroy/${id}`,
           method: 'DELETE',
@@ -43,4 +56,9 @@ export const productManagementApi = api.injectEndpoints({
   }),
 })
 
-export const { useGetCategoryQuery, useAddCategoryMutation, useDeleteCategoryMutation } = productManagementApi
+export const {
+  useGetCategoryQuery,
+  useAddCategoryMutation,
+  useUpdateCategoryMutation,
+  useDeleteCategoryMutation,
+} = productManagementApi

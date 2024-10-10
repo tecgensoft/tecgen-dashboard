@@ -4,7 +4,7 @@ import DeleteIcon from '@mui/icons-material/Delete'
 import EditIcon from '@mui/icons-material/Edit'
 import { Box, IconButton, Tooltip, Typography } from '@mui/material'
 import { GridColDef } from '@mui/x-data-grid'
-import { useState } from 'react'
+import { SetStateAction, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import ConfirmDeleteModal from '../../../components/modals/ConfirmDeleteModal'
 import { SUCCESS } from '../../../constant/constant'
@@ -12,13 +12,18 @@ import { setNotification } from '../../../redux/feature/notification/notificatio
 import { useDeleteCategoryMutation } from '../../../redux/feature/productManagement/productManagementApi'
 
 export default function CategoryColumn(handleEdit: { (editValue: any): void; (arg0: any): void }) {
-  const [deleteCategory] = useDeleteCategoryMutation()
+  const [categoryId, setCategoryId] = useState(null)
+  const [deleteCategory, {isLoading}] = useDeleteCategoryMutation()
   const [deleteModalOpen, setDeleteModalOpen] = useState<boolean>(false)
   const dispatch = useDispatch()
   
-
-  const handleDelete = async (deleteValue: { id: any }) => {
+const handleView = (row: { id: SetStateAction<null> }) => {
+  if(row) setCategoryId(row.id)
+}
+  const handleDelete = async (deleteValue: string|null) => {
+    
     if(deleteValue){
+      
       try {
         await deleteCategory({id: deleteValue}).then((res) => {
           setDeleteModalOpen(false)
@@ -31,7 +36,6 @@ export default function CategoryColumn(handleEdit: { (editValue: any): void; (ar
               }),
             )
           } else if(res.error){
-            console.log(res.error)
             dispatch(
               setNotification({
                 open: true,
@@ -199,7 +203,10 @@ export default function CategoryColumn(handleEdit: { (editValue: any): void; (ar
                   background: '#0000000a',
                   mx: '4px',
                 }}
-                onClick={() => setDeleteModalOpen(!deleteModalOpen)}
+                onClick={() => {
+                  setDeleteModalOpen(!deleteModalOpen)
+                  handleView(row)
+                }}
                 aria-label="delete"
               >
                 <DeleteIcon color="secondary" />
@@ -209,7 +216,8 @@ export default function CategoryColumn(handleEdit: { (editValue: any): void; (ar
               title={'Are you sure you want to delete this Category?'}
               open={deleteModalOpen}
               onClose={() => setDeleteModalOpen(false)}
-              onConfirm={() => handleDelete(row?.id)}
+              onConfirm={() => handleDelete(categoryId)}
+              isLoading={isLoading}
             ></ConfirmDeleteModal>
           </Box>
         )

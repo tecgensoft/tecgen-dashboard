@@ -21,11 +21,11 @@ const Notification = ({
   // Map type to MUI Alert severity
   const getSeverity = () => {
     switch (type) {
-      case 'success':
+      case 'SUCCESS':
         return 'success'
-      case 'danger':
+      case 'DANGER':
         return 'error'
-      case 'warning':
+      case 'WARNING':
         return 'warning'
       default:
         return 'info' // 'info' can be used for neutral or default type
@@ -45,15 +45,15 @@ const Notification = ({
         sx={{
           width: '100%',
           ...(type === 'success' && {
-            backgroundColor: '#4caf50', // Custom green color for success
+            backgroundColor: '#4caf50', 
             color: '#ffffff',
           }),
           ...(type === 'danger' && {
-            backgroundColor: '#f44336', // Custom red color for danger
+            backgroundColor: '#f44336', 
             color: '#ffffff',
           }),
           ...(type === 'warning' && {
-            backgroundColor: '#ff9800', // Custom orange color for warning
+            backgroundColor: '#ff9800',
             color: '#ffffff',
           }),
         }}

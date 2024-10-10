@@ -2,11 +2,13 @@ import { CloseOutlined } from '@mui/icons-material'
 import ImageIcon from '@mui/icons-material/Image'
 import { Box, Button, CircularProgress, Typography } from '@mui/material'
 import { SetStateAction, useEffect, useState } from 'react'
+import { CREATE } from '../constant/constant'
 import { ICategoryInfo } from '../pages/Category/types/types'
 import {
     useImgDeleteMutation,
     useImgUploadMutation,
 } from '../redux/feature/imageUpload/imageUploadApi'
+import { useAppSelector } from '../redux/hook'
 interface IImageField {
     label?: string
     required?: boolean
@@ -25,6 +27,7 @@ export default function ImageField({
     initialImage= [],
     errorMsg
 }: IImageField) {
+    const { type } = useAppSelector(state => state.open)
     const [error, setError] = useState<string | null>()
     const [previews, setPreviews] = useState<string[]>(initialImage?.length > 0 ? initialImage : [])
     const [isTouched, setIsTouched] = useState<boolean>(false)
@@ -113,18 +116,24 @@ export default function ImageField({
 
     const handleRemoveImage = async (index: number, imageUrl: string) => {
         setLoadingImages(prev => ({ ...prev, [imageUrl]: true }));
-        if (imageUrl) {
-            await imgDelete({
-                image_url: imageUrl,
-            }).then(res => {
-                if (res.data) {
-                    const updatedPreviews = previews.filter((_, i) => i !== index)
-                    setPreviews(updatedPreviews)
-                }
-            }).finally(() => {
-                setLoadingImages(prev => ({ ...prev, [imageUrl]: false }));
-            });
+        if(type === CREATE){
+            if (imageUrl) {
+                await imgDelete({
+                    image_url: imageUrl,
+                }).then(res => {
+                    if (res.data) {
+                        const updatedPreviews = previews.filter((_, i) => i !== index)
+                        setPreviews(updatedPreviews)
+                    }
+                }).finally(() => {
+                    setLoadingImages(prev => ({ ...prev, [imageUrl]: false }));
+                });
+            }
+        }else {
+            const updatedPreviews = previews.filter((_, i) => i !== index)
+            setPreviews(updatedPreviews)
         }
+        
     }
     const handleBlur = () => {
         setIsTouched(true)

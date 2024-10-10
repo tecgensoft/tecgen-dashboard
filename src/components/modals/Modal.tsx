@@ -8,7 +8,7 @@ import {
 } from '@mui/material'
 import { useDispatch } from 'react-redux'
 import closeIcon from '../../assets/closeIcon.png'
-import { setOpen } from '../../redux/feature/open/openSlice'
+import { setOpen, setType } from '../../redux/feature/open/openSlice'
 import { useAppSelector } from '../../redux/hook'
 const style = {
   position: 'absolute',
@@ -35,7 +35,10 @@ export default function ModalView({
   return (
     <Modal
       open={open}
-      onClose={() => dispatch(setOpen(!open))}
+      onClose={() => {
+        dispatch(setType(''))
+        dispatch(setOpen(!open))
+      }}
       BackdropProps={{
         style: {
           backgroundColor: 'rgba(0, 0, 0, 0.596)',

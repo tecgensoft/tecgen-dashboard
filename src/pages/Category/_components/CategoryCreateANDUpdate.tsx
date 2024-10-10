@@ -1,4 +1,4 @@
-import { Box, Button, Divider } from '@mui/material'
+import { Box, Button, CircularProgress, Divider } from '@mui/material'
 import { useDispatch } from 'react-redux'
 import ImageField from '../../../components/ImageField'
 import InputField from '../../../components/InputField'
@@ -14,6 +14,7 @@ interface CategoryCreateAndUpdateInterface {
   setCategoryInfo: React.Dispatch<React.SetStateAction<ICategoryInfo>>
   errors: ICategoryInfoError
   buttonValue?: string
+  btnLoading: boolean
 }
 
 export default function CategoryCreateANDUpdate({
@@ -24,6 +25,7 @@ export default function CategoryCreateANDUpdate({
   setCategoryInfo,
   errors,
   buttonValue = 'Create',
+  btnLoading
 }: CategoryCreateAndUpdateInterface) {
   const dispatch = useDispatch()
   // console.log(errors)
@@ -104,7 +106,7 @@ export default function CategoryCreateANDUpdate({
         </Button>
         {
           <Button type="submit" variant="contained" color="primary">
-            {buttonValue}
+            {btnLoading ? <CircularProgress size={'16px'} sx={{ color: 'white' }} />: buttonValue}
           </Button>
         }
       </Box>

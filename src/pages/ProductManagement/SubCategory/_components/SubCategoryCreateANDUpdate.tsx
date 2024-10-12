@@ -37,7 +37,7 @@ export default function SubCategoryCreateANDUpdate({
   categories,
 }: SubCategoryCreateAndUpdateInterface) {
   const dispatch = useDispatch()
-  console.log(subcategoryInfo)
+  // console.log(subcategoryInfo)
 
   return (
     <Box

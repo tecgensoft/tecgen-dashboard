@@ -3,13 +3,16 @@ import { Box } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 
-
 import ModalView from '../../../components/modals/Modal'
 import TableHeader from '../../../components/table/TableHeader'
 import { CREATE, DANGER, EDIT, SUCCESS } from '../../../constant/constant'
 import { setNotification } from '../../../redux/feature/notification/notificationSlice'
 import { setOpen, setType } from '../../../redux/feature/open/openSlice'
-import { useAddSubCategoryMutation, useGetCategoryQuery, useUpdateSubCategoryMutation } from '../../../redux/feature/productManagement/productManagementApi'
+import {
+  useAddSubCategoryMutation,
+  useGetCategoryQuery,
+  useUpdateSubCategoryMutation,
+} from '../../../redux/feature/productManagement/productManagementApi'
 import { useAppSelector } from '../../../redux/hook'
 import SubCategoryColumn from './_components/SubCategoryColumn'
 import SubCategoryCreateANDUpdate from './_components/SubCategoryCreateANDUpdate'
@@ -43,22 +46,27 @@ export default function SubCategory() {
     })
   }
   // handle select function
-  const handleChangeSelect = (_event: React.SyntheticEvent,
-    newValue: { label: string; value: number } | null) => {
-    setSubCategoryInfo({...subcategoryInfo, category: newValue?.value})
+  const handleChangeSelect = (
+    _event: React.SyntheticEvent,
+    newValue: { label: string; value: number } | null,
+  ) => {
+    setSubCategoryInfo({ ...subcategoryInfo, category: newValue?.value })
   }
   // handle checked function
   const handleChecked = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSubCategoryInfo({ ...subcategoryInfo, [e.target.name]: e.target.checked })
+    setSubCategoryInfo({
+      ...subcategoryInfo,
+      [e.target.name]: e.target.checked,
+    })
   }
 
   const validateForm = () => {
     const errors: {
-      name: string | null | undefined,
+      name: string | null | undefined
       category: string | null | undefined
     } = {
       name: undefined,
-      category: undefined
+      category: undefined,
     }
 
     if (!subcategoryInfo.name) {
@@ -80,7 +88,7 @@ export default function SubCategory() {
       setBtnLoading(true)
       const uploadCategoryDataObj: {
         name: string
-        category: number | undefined | null;
+        category: number | undefined | null
         icon?: string | undefined
         logo?: string | undefined
         is_active: boolean
@@ -104,7 +112,7 @@ export default function SubCategory() {
 
       if (type === CREATE) {
         addSubCategory(uploadCategoryDataObj)
-          .then((res:any) => {
+          .then((res: any) => {
             console.log(res.data)
             if (res.data) {
               setBtnLoading(false)
@@ -153,7 +161,7 @@ export default function SubCategory() {
       } else if (type === EDIT && updateId !== null) {
         updateSubCategory({ id: updateId, data: uploadCategoryDataObj })
           .then(res => {
-            if (res.data) {              
+            if (res.data) {
               setBtnLoading(false)
               dispatch(setOpen(false))
               setSubCategoryInfo({
@@ -219,7 +227,6 @@ export default function SubCategory() {
     }
   }
 
-
   const categoryOptionsFn = (categories: any[]) => {
     return categories?.map(category => {
       return {
@@ -230,22 +237,24 @@ export default function SubCategory() {
   }
   const categories = categoryOptionsFn(data?.results)
 
-  // useEffect(() => {
-  //   if(type === CREATE){
-  //     setCategoryInfo({name: '',
-  //       icon_images: [],
-  //       logo_images: [],
-  //       is_active: false,
-  //       show_in_ecommerce: false,})
-  //   }
-  // }, [type])
+  useEffect(() => {
+    if (type === CREATE) {
+      setSubCategoryInfo(prev => ({
+        ...prev,
+        name: '',
+        category: undefined,
+        is_active: false,
+        show_in_ecommerce: false,
+        icon_images: [],
+        logo_images: []
+      }))
+    }
+  }, [type])
   // console.log(categoryInfo)
   // reset error state
   useEffect(() => {
     setErrors({})
   }, [open])
-
-
 
   return (
     <Box
@@ -258,7 +267,9 @@ export default function SubCategory() {
       <TableHeader tableTitle="Sub Category List" />
       <Table columns={SubCategoryColumn(handleEdit)} />
       <ModalView
-        headerTitle={type === CREATE ? 'Create Sub category' : 'Update Sub category'}
+        headerTitle={
+          type === CREATE ? 'Create Sub category' : 'Update Sub category'
+        }
       >
         <SubCategoryCreateANDUpdate
           handleSubmit={handleSubmit}

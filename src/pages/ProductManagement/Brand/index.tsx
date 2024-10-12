@@ -9,26 +9,26 @@ import { CREATE, DANGER, EDIT, SUCCESS } from '../../../constant/constant'
 import { setNotification } from '../../../redux/feature/notification/notificationSlice'
 import { setOpen, setType } from '../../../redux/feature/open/openSlice'
 import {
-  useAddSubCategoryMutation,
-  useGetCategoryQuery,
-  useUpdateSubCategoryMutation,
+  useAddBrandMutation,
+  useGetSubCategoryQuery,
+  useUpdateBrandMutation
 } from '../../../redux/feature/productManagement/productManagementApi'
 import { useAppSelector } from '../../../redux/hook'
-import SubCategoryColumn from './_components/SubCategoryColumn'
-import SubCategoryCreateANDUpdate from './_components/SubCategoryCreateANDUpdate'
+import BrandColumn from './_components/BrandColumn'
+import BrandCreateANDUpdate from './_components/BrandCreateANDUpdate'
 import Table from './_components/Table'
-import { ICategoryInfoError, ISubCategoryInfo } from './types/types'
+import { IBrand, ICategoryInfoError, } from './types/types'
 
-export default function SubCategory() {
+export default function Brand() {
   const { type, open } = useAppSelector(state => state.open)
-  const { data } = useGetCategoryQuery({})
-  const [addSubCategory] = useAddSubCategoryMutation()
-  const [updateSubCategory] = useUpdateSubCategoryMutation()
+  const { data } = useGetSubCategoryQuery({})
+  const [addBrand] = useAddBrandMutation()
+  const [updateBrand] = useUpdateBrandMutation()
   const [updateId, setUpdateId] = useState(null)
   const [errors, setErrors] = useState<ICategoryInfoError>({})
-  const [subcategoryInfo, setSubCategoryInfo] = useState<ISubCategoryInfo>({
+  const [brandInfo, setbrandInfo] = useState<IBrand>({
     name: '',
-    category: undefined,
+    subcategory: undefined,
     icon_images: [],
     is_active: false,
     show_in_ecommerce: false,
@@ -38,7 +38,7 @@ export default function SubCategory() {
   // console.log(isLoading)
   // handle change function
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSubCategoryInfo({ ...subcategoryInfo, [e.target.name]: e.target.value })
+    setbrandInfo({ ...brandInfo, [e.target.name]: e.target.value })
     setErrors({
       ...errors,
       [e.target.name]: '',
@@ -49,12 +49,12 @@ export default function SubCategory() {
     _event: React.SyntheticEvent,
     newValue: { label: string; value: number } | null,
   ) => {
-    setSubCategoryInfo({ ...subcategoryInfo, category: newValue?.value })
+    setbrandInfo({ ...brandInfo, subcategory: newValue?.value })
   }
   // handle checked function
   const handleChecked = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSubCategoryInfo({
-      ...subcategoryInfo,
+    setbrandInfo({
+      ...brandInfo,
       [e.target.name]: e.target.checked,
     })
   }
@@ -62,17 +62,17 @@ export default function SubCategory() {
   const validateForm = () => {
     const errors: {
       name: string | null | undefined
-      category: string | null | undefined
+      subcategory: string | null | undefined
     } = {
       name: undefined,
-      category: undefined,
+      subcategory: undefined,
     }
 
-    if (!subcategoryInfo.name) {
+    if (!brandInfo.name) {
       errors.name = 'Name is required'
     }
-    if (!subcategoryInfo.category) {
-      errors.category = 'Category is required'
+    if (!brandInfo.subcategory) {
+      errors.subcategory = 'Subcategory is required'
     }
     setErrors(errors)
 
@@ -87,39 +87,38 @@ export default function SubCategory() {
       setBtnLoading(true)
       const uploadCategoryDataObj: {
         name: string
-        category: number | undefined | null
+        sub_category: number | undefined | null
         icon?: string | undefined
         is_active: boolean
         show_in_ecommerce: boolean
       } = {
-        name: subcategoryInfo.name,
-        category: subcategoryInfo.category,
-        is_active: subcategoryInfo.is_active,
-        show_in_ecommerce: subcategoryInfo.show_in_ecommerce,
+        name: brandInfo.name,
+        sub_category: brandInfo.subcategory,
+        is_active: brandInfo.is_active,
+        show_in_ecommerce: brandInfo.show_in_ecommerce,
       }
-      if (subcategoryInfo.icon_images.length > 0) {
-        uploadCategoryDataObj.icon = subcategoryInfo.icon_images[0]
+      if (brandInfo.icon_images.length > 0) {
+        uploadCategoryDataObj.icon = brandInfo.icon_images[0]
       } else {
         uploadCategoryDataObj.icon = ''
       }
 
       if (type === CREATE) {
-        addSubCategory(uploadCategoryDataObj)
+        addBrand(uploadCategoryDataObj)
           .then((res: any) => {
-            console.log(res.data)
             if (res.data) {
               setBtnLoading(false)
               dispatch(setOpen(false))
               dispatch(
                 setNotification({
                   open: true,
-                  message: `Category created successfully!`,
+                  message: `Brand created successfully!`,
                   type: SUCCESS,
                 }),
               )
-              setSubCategoryInfo({
+              setbrandInfo({
                 name: '',
-                category: undefined,
+                subcategory: undefined,
                 icon_images: [],
                 is_active: false,
                 show_in_ecommerce: false,
@@ -136,9 +135,9 @@ export default function SubCategory() {
                   type: DANGER,
                 }),
               )
-              setSubCategoryInfo({
+              setbrandInfo({
                 name: '',
-                category: undefined,
+                subcategory: undefined,
                 icon_images: [],
                 is_active: false,
                 show_in_ecommerce: false,
@@ -150,26 +149,39 @@ export default function SubCategory() {
             console.log(error)
           })
       } else if (type === EDIT && updateId !== null) {
-        updateSubCategory({ id: updateId, data: uploadCategoryDataObj })
-          .then(res => {
+        updateBrand({ id: updateId, data: uploadCategoryDataObj })
+          .then((res:any) => {
             if (res.data) {
               setBtnLoading(false)
               dispatch(setOpen(false))
-              setSubCategoryInfo({
+              dispatch(
+                setNotification({
+                  open: true,
+                  message: 'Brand updated ',
+                  type: SUCCESS,
+                }),
+              )
+              setbrandInfo({
                 name: '',
-                category: undefined,
+                subcategory: undefined,
                 icon_images: [],
                 is_active: false,
                 show_in_ecommerce: false,
               })
             }
             if (res.error) {
-              console.log(res.error)
               setBtnLoading(false)
               dispatch(setOpen(false))
-              setSubCategoryInfo({
+              dispatch(
+                setNotification({
+                  open: true,
+                  message: res.error.data.message,
+                  type: DANGER,
+                }),
+              )
+              setbrandInfo({
                 name: '',
-                category: undefined,
+                subcategory: undefined,
                 icon_images: [],
                 is_active: false,
                 show_in_ecommerce: false,
@@ -201,37 +213,37 @@ export default function SubCategory() {
       dispatch(setType(EDIT))
       dispatch(setOpen(true))
       setUpdateId(editValue?.id)
+      
       const updatedInfo = {
         name: editValue.name,
-        category: editValue.category,
+        subcategory: editValue.sub_category,
         is_active: editValue.is_active,
         show_in_ecommerce: editValue.show_in_ecommerce,
-        logo_images: isArray(editValue.logo),
         icon_images: isArray(editValue.icon),
       }
-      setSubCategoryInfo(prev => ({
+      setbrandInfo(prev => ({
         ...prev,
         ...updatedInfo,
       }))
     }
   }
 
-  const categoryOptionsFn = (categories: any[]) => {
-    return categories?.map(category => {
+  const subcategoryOptionsFn = (subcategories: any[]) => {
+    return subcategories?.map(subcategory => {
       return {
-        label: category.name,
-        value: category.id,
+        label: subcategory.name,
+        value: subcategory.id,
       }
     })
   }
-  const categories = categoryOptionsFn(data?.results)
+  const categories = subcategoryOptionsFn(data?.results)
 
   useEffect(() => {
     if (type === CREATE) {
-      setSubCategoryInfo(prev => ({
+      setbrandInfo(prev => ({
         ...prev,
         name: '',
-        category: undefined,
+        sub_category: undefined,
         is_active: false,
         show_in_ecommerce: false,
         icon_images: [],
@@ -252,20 +264,20 @@ export default function SubCategory() {
         padding: '16px',
       }}
     >
-      <TableHeader tableTitle="Sub Category List" />
-      <Table columns={SubCategoryColumn(handleEdit)} />
+      <TableHeader tableTitle="Brand List" />
+      <Table columns={BrandColumn(handleEdit)} />
       <ModalView
         headerTitle={
-          type === CREATE ? 'Create Sub category' : 'Update Sub category'
+          type === CREATE ? 'Create Brand' : 'Update Brand'
         }
       >
-        <SubCategoryCreateANDUpdate
+        <BrandCreateANDUpdate
           handleSubmit={handleSubmit}
           handleChange={handleChange}
           handleChecked={handleChecked}
           handleChangeSelect={handleChangeSelect}
-          subcategoryInfo={subcategoryInfo}
-          setSubCategoryInfo={setSubCategoryInfo}
+          brandInfo={brandInfo}
+          setbrandInfo={setbrandInfo}
           errors={errors}
           buttonValue={type === CREATE ? 'Create' : 'Update'}
           btnLoading={btnLoading}

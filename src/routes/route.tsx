@@ -15,6 +15,7 @@ import SubCategory from '../pages/ProductManagement/SubCategory'
 import Store from '../pages/Store'
 import Authenticate from './AuthenticateRoute'
 import PrivateRoute from './PrivateRoute'
+import Brand from '../pages/ProductManagement/Brand'
 
 const routes = createBrowserRouter([
   {
@@ -63,6 +64,10 @@ const routes = createBrowserRouter([
                 element: <SubCategory />,
               },
             ],
+          },
+          {
+            path: '/brand',
+            element: <Brand />,
           },
         ],
       },

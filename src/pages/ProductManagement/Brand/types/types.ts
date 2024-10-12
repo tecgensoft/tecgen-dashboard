@@ -1,5 +1,6 @@
-export interface ICategoryInfo {
-  name: string
+export interface IBrand {
+  name: string;
+  subcategory: number | null | undefined;
   icon_images: string[]
   is_active: boolean
   show_in_ecommerce: boolean

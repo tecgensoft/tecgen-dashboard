@@ -6,9 +6,9 @@ import ImageField from '../../../../components/ImageField'
 import InputField from '../../../../components/InputField'
 import SwitchField from '../../../../components/modals/Switch'
 import { setOpen } from '../../../../redux/feature/open/openSlice'
-import { ICategoryInfoError, ISubCategoryInfo } from '../types/types'
+import { IBrand, ICategoryInfoError,  } from '../types/types'
 
-interface SubCategoryCreateAndUpdateInterface {
+interface BrandCreateAndUpdateInterface {
   handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void
   handleChecked: (e: React.ChangeEvent<HTMLInputElement>) => void
@@ -16,28 +16,28 @@ interface SubCategoryCreateAndUpdateInterface {
     event: React.SyntheticEvent,
     newValue: { label: string; value: number } | null
   ) => void
-  subcategoryInfo: ISubCategoryInfo
-  setSubCategoryInfo: React.Dispatch<React.SetStateAction<ISubCategoryInfo>>
+  brandInfo: IBrand
+  setbrandInfo: React.Dispatch<React.SetStateAction<IBrand>>
   errors: ICategoryInfoError
   buttonValue?: string
   btnLoading: boolean
   categories: { label: string; value: number }[]
 }
 
-export default function SubCategoryCreateANDUpdate({
+export default function BrandCreateANDUpdate({
   handleSubmit,
   handleChange,
   handleChecked,
   handleChangeSelect,
-  subcategoryInfo,
-  setSubCategoryInfo,
+  brandInfo,
+  setbrandInfo,
   errors,
   buttonValue = 'Create',
   btnLoading,
   categories,
-}: SubCategoryCreateAndUpdateInterface) {
+}: BrandCreateAndUpdateInterface) {
   const dispatch = useDispatch()
-  // console.log(subcategoryInfo)
+  // console.log(brandInfo)
 
   return (
     <Box
@@ -52,12 +52,12 @@ export default function SubCategoryCreateANDUpdate({
       <InputField
         name="name"
         label="Name"
-        placeholder="Enter Sub category name"
+        placeholder="Enter brand name"
         required
         onChange={handleChange}
         error={!!errors.name}
         helperText={errors.name}
-        value={subcategoryInfo.name}
+        value={brandInfo.name}
       />
       <AutoSearchSelect
         options={categories}
@@ -65,8 +65,8 @@ export default function SubCategoryCreateANDUpdate({
         placeholder="Select Category"
         label="Category"
         required
-        value={subcategoryInfo.category}
-        error={errors.category}
+        value={brandInfo.subcategory}
+        error={errors.subcategory}
       />
       <Box
         sx={{
@@ -79,7 +79,7 @@ export default function SubCategoryCreateANDUpdate({
           onChange={handleChecked}
           name="is_active"
           labelOfChecked="Is Active"
-          value={subcategoryInfo.is_active}
+          value={brandInfo.is_active}
           // required
         />
         <Divider />
@@ -87,14 +87,14 @@ export default function SubCategoryCreateANDUpdate({
           onChange={handleChecked}
           name="show_in_ecommerce"
           labelOfChecked="Show in Ecommerce"
-          value={subcategoryInfo.show_in_ecommerce}
+          value={brandInfo.show_in_ecommerce}
         />
       </Box>
       <ImageField
         label="Upload Icon"
-        setParentInfo={setSubCategoryInfo}
+        setParentInfo={setbrandInfo}
         tagName="icon_images"
-        initialImage={subcategoryInfo.icon_images}
+        initialImage={brandInfo.icon_images}
         required
       />
       <Divider />

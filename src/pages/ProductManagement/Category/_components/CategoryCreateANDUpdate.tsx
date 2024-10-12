@@ -1,10 +1,11 @@
-import { Box, Button, CircularProgress, Divider } from '@mui/material'
-import { useDispatch } from 'react-redux'
-import ImageField from '../../../components/ImageField'
-import InputField from '../../../components/InputField'
-import SwitchField from '../../../components/modals/Switch'
-import { setOpen } from '../../../redux/feature/open/openSlice'
-import { ICategoryInfo, ICategoryInfoError } from '../types/types'
+import { Box, Button, CircularProgress, Divider } from '@mui/material';
+import { useDispatch } from 'react-redux';
+
+import ImageField from '../../../../components/ImageField';
+import InputField from '../../../../components/InputField';
+import SwitchField from '../../../../components/modals/Switch';
+import { setOpen } from '../../../../redux/feature/open/openSlice';
+import { ICategoryInfo, ICategoryInfoError } from '../types/types';
 
 interface CategoryCreateAndUpdateInterface {
   handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
@@ -74,16 +75,15 @@ export default function CategoryCreateANDUpdate({
       </Box>
       <ImageField
         label="Upload Icon"
-        setCategoryInfo={setCategoryInfo}
+        setParentInfo={setCategoryInfo}
         tagName="icon_images"
         initialImage={categoryInfo.icon_images}
         required
       />
       <ImageField
         label="Upload Logo"
-        setCategoryInfo={setCategoryInfo}
+        setParentInfo={setCategoryInfo}
         tagName="logo_images"
-        isMultiple={true}
         initialImage={categoryInfo.logo_images}
       />
       <Divider/>

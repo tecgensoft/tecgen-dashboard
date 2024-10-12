@@ -10,7 +10,8 @@ import NotFound from '../pages/notFound'
 
 
 
-import Category from '../pages/Category'
+import Category from '../pages/ProductManagement/Category'
+import SubCategory from '../pages/ProductManagement/SubCategory'
 import Store from '../pages/Store'
 import Authenticate from './AuthenticateRoute'
 import PrivateRoute from './PrivateRoute'
@@ -38,7 +39,7 @@ const routes = createBrowserRouter([
             element: <Dashboard />,
           },
           {
-            path: '/store',
+            path: '/store-list',
             element: <Store />,
           },
           {
@@ -59,7 +60,7 @@ const routes = createBrowserRouter([
               },
               {
                 path: 'manage-subcategory',
-                element: <Category />,
+                element: <SubCategory />,
               },
             ],
           },

@@ -1,9 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { CloseOutlined } from '@mui/icons-material'
 import ImageIcon from '@mui/icons-material/Image'
 import { Box, Button, CircularProgress, Typography } from '@mui/material'
 import { SetStateAction, useEffect, useState } from 'react'
 import { CREATE } from '../constant/constant'
-import { ICategoryInfo } from '../pages/Category/types/types'
 import {
     useImgDeleteMutation,
     useImgUploadMutation,
@@ -13,7 +13,7 @@ interface IImageField {
     label?: string
     required?: boolean
     tagName: string;
-    setCategoryInfo: React.Dispatch<SetStateAction<ICategoryInfo>>;
+    setParentInfo: React.Dispatch<SetStateAction<any>>;
     isMultiple?: boolean;
     initialImage?: string[]
     errorMsg?: string | null
@@ -21,7 +21,7 @@ interface IImageField {
 export default function ImageField({
     label,
     required = false,
-    setCategoryInfo,
+    setParentInfo,
     tagName,
     isMultiple,
     initialImage= [],
@@ -39,8 +39,8 @@ export default function ImageField({
 
 
     useEffect(() => {
-        setCategoryInfo((prev) => ({ ...prev, [tagName]: previews }))
-    }, [previews, setCategoryInfo, tagName])
+        setParentInfo((prev: any) => ({ ...prev, [tagName]: previews }))
+    }, [previews, setParentInfo, tagName])
 
     const handleFileChange = async (
         event: React.ChangeEvent<HTMLInputElement>,

@@ -1,7 +1,8 @@
-import { Box, Typography } from '@mui/material'
+import { Box } from '@mui/material'
 import TextField from '@mui/material/TextField'
 import { styled } from '@mui/material/styles'
 import React from 'react'
+import InputLabel from './InputLabel'
 interface StyledInputProps {
   type?: string
   errorText?: string
@@ -60,7 +61,8 @@ const InputField: React.FC<StyledInputProps> = ({
 } ) => {
   return (
     <Box>
-      {label && <Typography sx={{color:"#0D0D0D", mb:"8px", fontSize:"14px"}}>{label}{required && <Box component='span' color={'red'} >*</Box>}</Typography>}
+      {/* {label && <Typography sx={{color:"#0D0D0D", mb:"8px", fontSize:"14px"}}>{label}{required && <Box component='span' color={'red'} >*</Box>}</Typography>} */}
+      <InputLabel label={label} required={required} />
       <InputFieldComponent
         type={type}
         helperText={helperText}

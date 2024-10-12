@@ -6,10 +6,10 @@ import { Box, IconButton, Tooltip, Typography } from '@mui/material'
 import { GridColDef } from '@mui/x-data-grid'
 import { SetStateAction, useState } from 'react'
 import { useDispatch } from 'react-redux'
-import ConfirmDeleteModal from '../../../components/modals/ConfirmDeleteModal'
-import { SUCCESS } from '../../../constant/constant'
-import { setNotification } from '../../../redux/feature/notification/notificationSlice'
-import { useDeleteCategoryMutation } from '../../../redux/feature/productManagement/productManagementApi'
+import ConfirmDeleteModal from '../../../../components/modals/ConfirmDeleteModal'
+import { SUCCESS } from '../../../../constant/constant'
+import { setNotification } from '../../../../redux/feature/notification/notificationSlice'
+import { useDeleteCategoryMutation } from '../../../../redux/feature/productManagement/productManagementApi'
 
 export default function CategoryColumn(handleEdit: { (editValue: any): void; (arg0: any): void }) {
   const [categoryId, setCategoryId] = useState(null)

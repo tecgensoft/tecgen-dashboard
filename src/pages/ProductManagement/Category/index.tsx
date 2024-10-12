@@ -2,20 +2,19 @@
 import { Box } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
-import ModalView from '../../components/modals/Modal'
-import TableHeader from '../../components/table/TableHeader'
-import { CREATE, DANGER, EDIT, SUCCESS } from '../../constant/constant'
-import { setOpen, setType } from '../../redux/feature/open/openSlice'
-import {
-  useAddCategoryMutation,
-  useUpdateCategoryMutation
-} from '../../redux/feature/productManagement/productManagementApi'
-import { useAppSelector } from '../../redux/hook'
+
+
+import ModalView from '../../../components/modals/Modal'
+import TableHeader from '../../../components/table/TableHeader'
+import { CREATE, DANGER, EDIT, SUCCESS } from '../../../constant/constant'
+import { setNotification } from '../../../redux/feature/notification/notificationSlice'
+import { setOpen, setType } from '../../../redux/feature/open/openSlice'
+import { useAddCategoryMutation, useUpdateCategoryMutation } from '../../../redux/feature/productManagement/productManagementApi'
+import { useAppSelector } from '../../../redux/hook'
 import CategoryColumn from './_components/CategoryColumn'
 import CategoryCreateANDUpdate from './_components/CategoryCreateANDUpdate'
 import Table from './_components/Table'
 import { ICategoryInfo, ICategoryInfoError } from './types/types'
-import { setNotification } from '../../redux/feature/notification/notificationSlice'
 
 export default function Category() {
   const { type, open } = useAppSelector(state => state.open)
@@ -66,8 +65,8 @@ export default function Category() {
   // handle submit function
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    setBtnLoading(true)
     if (validateForm()) {
+      setBtnLoading(true)
       const uploadCategoryDataObj: {
         name: string
         icon?: string | undefined 
@@ -173,7 +172,8 @@ export default function Category() {
   const handleEdit = (editValue: any) => {
     // Checking icon & logo type string or array
     const isArray = (value: string | string[]) => {
-      if (Array.isArray(value) && value.length > 0) {
+      if(value === '') return []
+      else if (Array.isArray(value) && value.length > 0) {
         return value
       } else if (typeof value === 'string') {
         return [value]

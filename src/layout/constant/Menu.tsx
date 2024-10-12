@@ -38,8 +38,7 @@ const Menu = () => {
       ),
       title: 'Store',
       items: [
-        { title: 'Add Store', items: [], to: '/category/manage-category' },
-        { title: 'Store List', items: [], to: '/category/manage-subcategory' },
+        { title: 'Store List', items: [], to: '/store-list' },
       ],
     },
     {

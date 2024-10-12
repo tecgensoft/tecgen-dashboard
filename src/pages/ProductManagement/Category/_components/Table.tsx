@@ -2,10 +2,9 @@
 import { Box, useTheme } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 import { useState } from 'react';
-import CustomNoRowsOverlay from '../../../components/NoData';
-import TableLoader from '../../../components/table/TableLoader';
-import { useGetCategoryQuery } from '../../../redux/feature/productManagement/productManagementApi';
-
+import CustomNoRowsOverlay from '../../../../components/NoData';
+import TableLoader from '../../../../components/table/TableLoader';
+import { useGetCategoryQuery } from '../../../../redux/feature/productManagement/productManagementApi';
 
 export default function Table({ columns, }: { columns: any[]; }) {
   const theme = useTheme()

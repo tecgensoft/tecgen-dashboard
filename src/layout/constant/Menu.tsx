@@ -53,7 +53,7 @@ const Menu = () => {
       items: [
         { title: 'Category', items: [], to: '/category/manage-category' },
         { title: 'Subcategory', items: [], to: '/category/manage-subcategory' },
-        { title: 'Brand', items: [], to: '/brand/manage-brands' },
+        { title: 'Brand', items: [], to: '/brand' },
         { title: 'Attribute', items: [], to: '/brand/manage-brands' },
         { title: 'Attribute Value', items: [], to: '/brand/manage-brands' },
       ],

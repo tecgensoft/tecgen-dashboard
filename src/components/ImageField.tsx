@@ -89,7 +89,6 @@ export default function ImageField({
                 }
             } else {
                 if (previews.length > 0) {
-                    console.log('ok')
                     // if EDIT we do not delete image. remove from array not call the function
                     previews.map(async (imgLink) => {
                         await imgDelete({

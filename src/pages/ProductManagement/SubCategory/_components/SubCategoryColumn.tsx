@@ -77,23 +77,6 @@ const handleView = (row: { id: SetStateAction<null> }) => {
       },
     },
     {
-      field: 'logo',
-      headerName: 'Logo',
-      sortable: false,
-      disableColumnMenu: true,
-      minWidth: 80,
-      flex: 0.2,
-      renderCell: value => {
-        return (
-          <Box sx={{ display: 'flex', py: '4px' }}>
-            {value.value.length > 0 && (
-              <img src={value.value} alt="Icon" height={'40px'} />
-            )}
-          </Box>
-        )
-      },
-    },
-    {
       field: 'name',
       headerName: 'Name',
       sortable: false,

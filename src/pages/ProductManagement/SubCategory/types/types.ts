@@ -2,7 +2,6 @@ export interface ISubCategoryInfo {
   name: string;
   category: number | null | undefined;
   icon_images: string[]
-  logo_images: string[]
   is_active: boolean
   show_in_ecommerce: boolean
 }

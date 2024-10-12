@@ -61,9 +61,15 @@ export const productManagementApi = api.injectEndpoints({
       invalidatesTags: ['DeleteCategory'],
     }),
     getSubCategory: builder.query({
-      query: ({ page }) => {
+      query: ({ page }: { page?: number }) => {
+        let urls: string
+        if (page) {
+          urls = `/catalog/subcategory/?page=${page}`
+        } else {
+          urls = `/catalog/subcategory/`
+        }
         return {
-          url: `/catalog/subcategory/?page=${page}`,
+          url: urls,
           method: 'GET',
           // body: data,
           headers: {
@@ -111,6 +117,56 @@ export const productManagementApi = api.injectEndpoints({
       },
       invalidatesTags: ['SubDeleteCategory'],
     }),
+    getBrand: builder.query({
+      query: ({ page }) => {
+        return {
+          url: `/catalog/brand/?page=${page}`,
+          method: 'GET',
+          headers: {
+            'content-type': 'application/json',
+          },
+        }
+      },
+      providesTags: ['AddBrand', 'UpdateBrand', 'DeleteBrand'],
+    }),
+    addBrand: builder.mutation({
+      query: data => {
+        return {
+          url: '/catalog/brand/',
+          method: 'POST',
+          body: JSON.stringify(data),
+          headers: {
+            'content-type': 'application/json',
+          },
+        }
+      },
+      invalidatesTags: ['AddBrand'],
+    }),
+    updateBrand: builder.mutation({
+      query: ({ id, data }) => {
+        return {
+          url: `/catalog/brand-retrieve-update-destroy/${id}`,
+          method: 'PUT',
+          body: JSON.stringify(data),
+          headers: {
+            'content-type': 'application/json',
+          },
+        }
+      },
+      invalidatesTags: ['UpdateBrand'],
+    }),
+    deleteBrand: builder.mutation({
+      query: ({ id }) => {
+        return {
+          url: `/catalog/brand-retrieve-update-destroy/${id}`,
+          method: 'DELETE',
+          headers: {
+            'content-type': 'application/json',
+          },
+        }
+      },
+      invalidatesTags: ['DeleteBrand'],
+    }),
   }),
 })
 
@@ -122,5 +178,9 @@ export const {
   useGetSubCategoryQuery,
   useAddSubCategoryMutation,
   useUpdateSubCategoryMutation,
-  useDeleteSubCategoryMutation
+  useDeleteSubCategoryMutation,
+  useGetBrandQuery,
+  useAddBrandMutation,
+  useUpdateBrandMutation,
+  useDeleteBrandMutation
 } = productManagementApi

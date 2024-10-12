@@ -80,12 +80,6 @@ export default function CategoryCreateANDUpdate({
         initialImage={categoryInfo.icon_images}
         required
       />
-      <ImageField
-        label="Upload Logo"
-        setParentInfo={setCategoryInfo}
-        tagName="logo_images"
-        initialImage={categoryInfo.logo_images}
-      />
       <Divider/>
       <Box
         pl={4}

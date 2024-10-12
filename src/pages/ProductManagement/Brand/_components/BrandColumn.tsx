@@ -9,37 +9,35 @@ import { useDispatch } from 'react-redux'
 import ConfirmDeleteModal from '../../../../components/modals/ConfirmDeleteModal'
 import { SUCCESS } from '../../../../constant/constant'
 import { setNotification } from '../../../../redux/feature/notification/notificationSlice'
-import { useDeleteCategoryMutation } from '../../../../redux/feature/productManagement/productManagementApi'
+import { useDeleteBrandMutation } from '../../../../redux/feature/productManagement/productManagementApi'
 
-export default function CategoryColumn(handleEdit: { (editValue: any): void; (arg0: any): void }) {
-  const [categoryId, setCategoryId] = useState(null)
-  const [deleteCategory, {isLoading}] = useDeleteCategoryMutation()
+export default function BrandColumn(handleEdit: { (editValue: any): void; (arg0: any): void }) {
+  const [brandId, setBrandId] = useState(null)
+  const [deleteBrand, {isLoading}] = useDeleteBrandMutation()
   const [deleteModalOpen, setDeleteModalOpen] = useState<boolean>(false)
   const dispatch = useDispatch()
   
 const handleView = (row: { id: SetStateAction<null> }) => {
-  if(row) setCategoryId(row.id)
+  if(row) setBrandId(row.id)
 }
   const handleDelete = async (deleteValue: string|null) => {
-    
-    if(deleteValue){
-      
+    if(deleteValue){      
       try {
-        await deleteCategory({id: deleteValue}).then((res) => {
+        await deleteBrand({id: deleteValue}).then((res:any) => {
           setDeleteModalOpen(false)
           if(res.data){
             dispatch(
               setNotification({
                 open: true,
-                message: 'Category Deleted Successfully!',
+                message: 'Brand Deleted Successfully!',
                 type: SUCCESS,
               }),
             )
-          } else if(res.error){
+          } else if(res.error){            
             dispatch(
               setNotification({
                 open: true,
-                message: 'Category not deleted. Something went wrong!',
+                message: res.error.data.message,
                 type: SUCCESS,
               }),
             )
@@ -52,7 +50,7 @@ const handleView = (row: { id: SetStateAction<null> }) => {
         dispatch(
           setNotification({
             open: true,
-            message: 'Category not deleted. Something went wrong!',
+            message: 'Brand not deleted. Something went wrong!',
             type: SUCCESS,
           }),
         )
@@ -77,14 +75,23 @@ const handleView = (row: { id: SetStateAction<null> }) => {
           </Box>
         )
       },
-    },    
+    },
     {
       field: 'name',
       headerName: 'Name',
       sortable: false,
       disableColumnMenu: true,
-      minWidth: 300,
-      flex: 1,
+      minWidth: 250,
+      flex: 0.5,
+    },
+    {
+      field: 'sub_category_name',
+      headerName: 'Subcategory',
+      sortable: false,
+      disableColumnMenu: true,
+      minWidth: 250,
+      flex: 0.5,
+      valueGetter: (value: any) => value?.name,
     },
     {
       field: 'show_in_ecommerce',
@@ -196,10 +203,10 @@ const handleView = (row: { id: SetStateAction<null> }) => {
               </IconButton>
             </Tooltip>
             <ConfirmDeleteModal
-              title={'Are you sure you want to delete this Category?'}
+              title={'Are you sure you want to delete this Brand?'}
               open={deleteModalOpen}
               onClose={() => setDeleteModalOpen(false)}
-              onConfirm={() => handleDelete(categoryId)}
+              onConfirm={() => handleDelete(brandId)}
               isLoading={isLoading}
             ></ConfirmDeleteModal>
           </Box>

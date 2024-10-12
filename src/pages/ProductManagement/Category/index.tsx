@@ -26,7 +26,6 @@ export default function Category() {
   const [categoryInfo, setCategoryInfo] = useState<ICategoryInfo>({
     name: '',
     icon_images: [],
-    logo_images: [],
     is_active: false,
     show_in_ecommerce: false,
   })
@@ -70,7 +69,6 @@ export default function Category() {
       const uploadCategoryDataObj: {
         name: string
         icon?: string | undefined 
-        logo?: string | undefined 
         is_active: boolean
         show_in_ecommerce: boolean
       } = {
@@ -82,11 +80,6 @@ export default function Category() {
         uploadCategoryDataObj.icon = categoryInfo.icon_images[0]
       }else {
         uploadCategoryDataObj.icon = ''
-      }
-      if (categoryInfo.logo_images.length > 0) {
-        uploadCategoryDataObj.logo = categoryInfo.logo_images[0]
-      }else{
-        uploadCategoryDataObj.logo = ''
       }
 
       if(type === CREATE){
@@ -105,7 +98,6 @@ export default function Category() {
             setCategoryInfo({
               name: '',
               icon_images: [],
-              logo_images: [],
               is_active: false,
               show_in_ecommerce: false,
             })
@@ -123,7 +115,6 @@ export default function Category() {
             setCategoryInfo({
               name: '',
               icon_images: [],
-              logo_images: [],
               is_active: false,
               show_in_ecommerce: false,
             })
@@ -142,7 +133,6 @@ export default function Category() {
             setCategoryInfo({
               name: '',
               icon_images: [],
-              logo_images: [],
               is_active: false,
               show_in_ecommerce: false,
             })
@@ -153,7 +143,6 @@ export default function Category() {
             setCategoryInfo({
               name: '',
               icon_images: [],
-              logo_images: [],
               is_active: false,
               show_in_ecommerce: false,
             })

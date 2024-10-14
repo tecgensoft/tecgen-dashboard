@@ -189,7 +189,7 @@ function Layout() {
           component="main"
           sx={{
             flexGrow: 1,
-            paddingTop: '114px',
+            paddingTop: '80px',
             bgcolor: theme =>
               theme.palette.mode === 'dark' ? '#141414' : ' #eff3f4',
             minHeight: '100vh',

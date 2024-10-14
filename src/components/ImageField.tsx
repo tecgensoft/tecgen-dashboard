@@ -9,6 +9,7 @@ import {
     useImgUploadMutation,
 } from '../redux/feature/imageUpload/imageUploadApi'
 import { useAppSelector } from '../redux/hook'
+import InputLabel from './InputLabel'
 interface IImageField {
     label?: string
     required?: boolean
@@ -150,9 +151,7 @@ export default function ImageField({
     return (
         <Box>
             {label && (
-                <Typography sx={{ fontSize: '14px', color: '#0D0D0D', mb: '8px' }}>
-                    {label}
-                </Typography>
+                <InputLabel label={label} required={required} />
             )}
             <Box display="flex" alignItems="center" flexWrap="wrap" gap={2}>
                 <Button

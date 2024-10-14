@@ -41,7 +41,7 @@ export default function Header({
         boxShadow: 'none',
         width:
           open && !isSmallScreen ? `calc(100% - ${drawerWidth}px)` : '100%',
-        height: '100px',
+        height: '60px',
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',
@@ -49,15 +49,15 @@ export default function Header({
         padding: open
           ? '0 24px'
           : !isSmallScreen
-            ? '0px 24px 0 114px'
+            ? '0px 24px 0 70px'
             : '0px 24px 0 14px',
         transition: 'padding 0.3s ease-in-out', // Only keep transition for padding
         // Remove other transitions that might cause layout shifts
       }}
     >
-<Box></Box>
+      <Box></Box>
       <Box display="flex" flexDirection="row" alignItems="center" gap="24px">
-       
+
         <Profile />
       </Box>
     </AppBar>

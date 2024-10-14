@@ -24,7 +24,7 @@ export default function AutoSearchSelect({
 }: IAutoSearchSelect) {
   console.log(value)
   return (
-    <Box>
+    <Box width={'100%'}>
       <InputLabel label={label} required={required} />
       <Autocomplete
         value={options?.find(option => option?.value === value)}

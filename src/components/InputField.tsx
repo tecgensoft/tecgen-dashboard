@@ -60,7 +60,7 @@ const InputField: React.FC<StyledInputProps> = ({
   placeholder
 } ) => {
   return (
-    <Box>
+    <Box width={'100%'}>
       {/* {label && <Typography sx={{color:"#0D0D0D", mb:"8px", fontSize:"14px"}}>{label}{required && <Box component='span' color={'red'} >*</Box>}</Typography>} */}
       <InputLabel label={label} required={required} />
       <InputFieldComponent
@@ -76,6 +76,7 @@ const InputField: React.FC<StyledInputProps> = ({
         placeholder={placeholder && placeholder}
         disabled={disable}
         onChange={onChange}
+        
       />
     </Box>
   )

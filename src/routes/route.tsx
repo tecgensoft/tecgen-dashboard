@@ -10,12 +10,13 @@ import NotFound from '../pages/notFound'
 
 
 
+import Brand from '../pages/ProductManagement/Brand'
 import Category from '../pages/ProductManagement/Category'
 import SubCategory from '../pages/ProductManagement/SubCategory'
+import AddProduct from '../pages/products/addProduct'
 import Store from '../pages/Store'
 import Authenticate from './AuthenticateRoute'
 import PrivateRoute from './PrivateRoute'
-import Brand from '../pages/ProductManagement/Brand'
 
 const routes = createBrowserRouter([
   {
@@ -42,16 +43,7 @@ const routes = createBrowserRouter([
           {
             path: '/store-list',
             element: <Store />,
-          },
-          {
-            path: '/products/manage-products',
-            children: [
-              {
-                index: true,
-                element: <Category/>,
-              },
-            ],
-          },
+          },          
           {
             path: '/category',
             children: [
@@ -61,6 +53,19 @@ const routes = createBrowserRouter([
               },
               {
                 path: 'manage-subcategory',
+                element: <SubCategory />,
+              },
+            ],
+          },
+          {
+            path: '/products',
+            children: [
+              {
+                path: 'add-product',
+                element: <AddProduct />,
+              },
+              {
+                path: 'manage-products',
                 element: <SubCategory />,
               },
             ],
